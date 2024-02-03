@@ -1,0 +1,91 @@
+1. hasPath (src, dest)
+
+Recursion DFS:
+first check src == des, then yehi ans hai, nhi to uske nbrs se pucho ki usse des ka rasta 
+hai ya nhi. 
+Note: here iteration is like
+            1
+        /     \
+        2     3
+        / \
+        4  5 
+here we are asking 1 == 5, if yes then return true nhi to check nbrs i.e 2ad 3
+after 2 we will check 4  since 4 is checked before 3, that means first we are going
+in depth, so this approach is called dfs.
+
+public static boolean hasPath(ArrayList<Edge>[] graph , int src , int des , boolean[] visited){
+        if(src == des) return true;
+        
+        visited[src] = true;
+        for(Edge e : graph[src]){
+            if(!visited[e.nbr] && hasPath(graph , e.nbr , des , visited)){
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
+//Key Points
+1. Reason we use visited[] array because in case of cycle, hm 1 se khenge apne nbr se
+an la, and 1 ka nbr is 0, then 0 khega apne nbr se and la which one that means infinity
+stack, so we use visited array.
+
+// find all paths:
+2. PrintAllPAths() 
+. agar same above use kre, to lets say graph is
+  1 ---4 ---6
+  |    | \  |  
+  2 --- 3   5
+  1 to 6 paths are 123456, ye krte time poora graph vis mark hogya, now
+  how get all paths? what  after a loop finishes, we unmark the visited that means
+  jb hm 1-2-3-4-5-6 visted mark kiye ab 1 ke next nbr i.e 4 k pass jana hai
+  normal cases m kyuki vis mark h to hm nhi jate but abhi jana pdega so jb hm back 
+  track krre honge vaps 1 tak, us time 23456 vis unmark hogye honge, lekin loop m 
+  1-2 khtm ho gyi to ye path m dobar nhi jaenge, ab next edge 1-4 m jaenge to have all answers
+
+public static void print(ArrayList<Edge>[] graph , int src , int des , boolean[] visited, String psf){
+        if(src == des) {
+            print(psf);
+            return;
+        }
+        
+        visited[src] = true;
+        for(Edge e : graph[src]){
+            if(visited[e.nbr] == false){
+                print(graph,e.nbr, des, vis, psf+src);
+            }
+        }
+        //backtrack
+        visited[src] = false;
+        return false;
+        
+    }
+
+
+Iterative DFS   
+why do we need stack, becuase call stack hoti h vo memory m bnti h which is limited and can be
+overflow but is iterative approach m we are using Stack object which is stored in heap
+that is unlimited. so this is better. 
+
+boolean[] visited = new boolean[vtces];
+        // dequeue add last remove first
+        Stack<Integer> st = new Stack<>();
+        st.push(src);
+
+        while (!queue.isEmpty()) {
+            Pair p = st.pop();
+
+            if (visited[p.v]) { // if we come here that means graph has a cycle
+                continue;
+            }
+
+            visited[p.v] = true;
+            System.out.println(p.v + "@" + p.psf);
+            
+            for (Edge e : graph[p.v]) {
+                if (!visited[e.nbr]) {
+                    st.push(new Pair(e.nbr, p.psf + e.nbr));
+                }
+            }
+        }

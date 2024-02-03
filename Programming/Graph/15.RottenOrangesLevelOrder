@@ -1,0 +1,79 @@
+Given a matrix where 2 means oranges are rotten 1 means fresh 0 means nothing.
+So we want min time to make all oranges rotten. It is very similar to spread infections
+question but here;s a catch that there can be more than one rotten orange, so it is
+a multisource bfs problem.
+
+1. We will put all the rotten oranges as source in a queue.
+2. now to calculate tim we when one level is done, i.e all the rotten oranges source
+we put in a queue in starting are executed. so instead of  doing normal bfs, we will
+righ the code in such a way, thawe can calculate the level.
+3. Now there can be case after doinf it, some oranges are not rotten, so that's we
+will keep a count of orages that turned into rotten to know the answer
+
+
+keyPoint, hme agar multiple source m level se and nikalna ho to 2 ways pair class main
+ek level rkhlo, and usko prev level+1 kro ya fir level order m chlake level count krlo
+both are same
+
+  class Pair{
+        int row;
+        int col;
+        Pair(int row, int col){
+            this.row = row;
+            this.col = col;
+        }
+    }
+    public int orangesRotting(int[][] grid) {
+        Queue<Pair> q = new LinkedList<>();
+        int fresh = 0;
+        for(int i =0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                // rotten oranges added a source
+                if(grid[i][j] == 2){
+                    q.add(new Pair(i,j));
+                }
+                // fresh oranges count maintained for point 3
+                else if(grid[i][j] == 1){
+                    fresh++;
+                }
+            }
+        }
+        
+        if(fresh == 0){
+            return 0;
+        }
+        int level = -1;
+        int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
+        
+        // level order traversal of bfs
+        while(q.size() > 0){
+            level++;
+            int size = q.size();
+            // here we size variable as qsize can be change
+            while(size-- > 0){
+                Pair rem = q.remove();
+                // checking nbrs
+                for(int i = 0; i < 4; i++){
+                    int rdash = rem.row + dir[i][0];
+                    int cdash = rem.col + dir[i][1];
+                    
+                    if(rdash < 0 || cdash < 0 || rdash >= grid.length || cdash >= grid[0].length || grid[rdash][cdash] != 1 ){
+                        continue;
+                    }
+                    //only fresh oranges needs to be added.
+                    q.add(new Pair(rdash,cdash));
+                    // marking it visted or we can say rotten
+                    fresh--;
+                    grid[rdash][cdash] = 2;
+                    
+                }
+            }
+        }
+        // fresh oranges are finished.
+        if(fresh == 0){
+            return level;
+        }
+        else{
+            return -1;
+        }
+    }

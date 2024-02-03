@@ -1,0 +1,38 @@
+Mother verte se hm graph m kisi bhi vtx tk ja skte hai, now hme dfs lganeg stack m dalenge
+and top vale ko check agr vo hai to uss graph m mother vtx if not return false
+
+why?  
+isMthrVtspresent?
+cases   top   rest of graph
+         1          1         == sol is correct
+         1           0        == sol is correct
+         0           0        == sol is correct
+         0           1  this will never exist as mth vts means hm usse
+
+hr vtx tk ja skte hai, meaning top -> rest, and rest se hm hr jgah ja skte to mtlb
+top bhi mother vtx hua
+other case top se edge nhi hai, then vo element top pe aa hi ni skta.
+
+// calculate stack
+static int count;
+	public static void dfs(ArrayList<ArrayList<Integer>> g, int src,
+	 int[] visisted, ArrayList<Integer> st){
+		visisted[src] = 1;
+		for(int nbr : g.get(src)){
+			if(visisted[nbr] == 0){
+				dfs(g, nbr,visisted, st);
+			}
+		}
+		st.add(src);
+	}
+//check count
+	public static void checkVertex(ArrayList<ArrayList<Integer>> g, int src,
+	 int[] visisted){
+		visisted[src] = 1;
+		count++;
+		for(int nbr : g.get(src)){
+			if(visisted[nbr] == 0){
+				checkVertex(g, nbr,visisted);
+			}
+		}
+	}

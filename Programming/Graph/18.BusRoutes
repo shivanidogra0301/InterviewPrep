@@ -1,0 +1,87 @@
+https://leetcode.com/problems/bus-routes/description/
+
+hr bus k routes given hai, hme btanna hai minimu kitni bus leke target tk ja skte hai.
+Now bus routes se ek graph bn jaega, usme puche minimu kitne edge se target tk phochna hai
+to normal BFS lg jata simple ans ho jata. But yha catch ye hai ki same bus route m
+sbka ans 1 rhega, kyuki total bus puchi hai 
+i.e 1 ->2 ->7 route h, in terms of bfs ans is 2 but total bus is 1.
+to jb hm queue m add kre, 2 and 7 k sath 1 hi aana chaiye. so pair clss main busstop
+vs tb rkh rhe hai to make it easy hm hashmap bnanege jo busstop dalne pr hme
+busno de, kyuki usse hm route nikal skte h, or uss route m jo bhi bus stop hai
+unko , 1 krke queue m add kr skte hai.
+
+Now to handle visited nodes, when one bstop is executed, no need to do it again
+and one bus is done, no need to repeat it as same node pe ek bus ko 2 bar lejana do
+no make sense.
+
+   /* now source se shuru hoke hr stop pe check krenge ki konsi bus aboard krni h
+ if a bus is selected to usse jis jis stop tk ja skte h vha ka ans rem pair
+ k ans+1 hoga. hmne agr ek bus select krli to usse jaha b ja skte the vha ans dal
+ dia to dobara uss bus ko use nhi krna so we maintain a hashset also, agr ek
+ bus stop ko visit krlia to usko dobara visit ni krna kyuki hme minimum ans chiaye*/
+    
+    class Pair{
+        int bstop;
+        int tb;
+        Pair(int bstop, int tb){
+            this.bstop = bstop;
+            this.tb = tb;
+                
+        }
+    }
+    public int numBusesToDestination(int[][] routes, int src, int target) {
+        // map bus stop to bus no, ki 5 stop se kon kon si bus board kr skte h
+        HashMap<Integer,ArrayList<Integer>> map = new HashMap<>();
+        for(int i = 0; i < routes.length; i++){
+            for(int j =0 ; j < routes[i].length; j++){
+             // i is bus no, j is bus stop
+                int bstop = routes[i][j];
+                if(map.containsKey(bstop)){
+                    ArrayList<Integer> list = map.get(bstop);
+                    list.add(i);
+                    map.put(bstop,list);
+                }
+                else{
+                    ArrayList<Integer> list = new ArrayList<>();
+                    list.add(i);
+                    map.put(bstop,list);
+                }
+                
+            }
+        }
+        HashSet<Integer> busno = new HashSet<>();
+        HashSet<Integer> bstop = new HashSet<>();
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(src,0));
+        bstop.add(src);
+        
+        while(q.size() > 0){
+            int size = q.size();
+            
+            while(size-- > 0){
+                Pair rem = q.remove();
+                
+                if(rem.bstop == target){
+                    return rem.tb;
+                }
+                ArrayList<Integer> buses = map.get(rem.bstop);
+                for(int bus : buses){
+                    if(busno.contains(bus)){
+                            continue;
+                    }
+                    int[] arr = routes[bus];
+                    for(int i = 0; i < arr.length; i++){
+                        
+                        if(!bstop.contains(arr[i])){
+                            q.add(new Pair(arr[i],rem.tb+1));
+                            bstop.add(arr[i]);
+                        }
+                    }
+                    busno.add(bus);
+                }
+            }
+        }
+
+        return -1;
+        
+    }

@@ -1,0 +1,68 @@
+Hme connected componets pta h undirected graph m, ki ek connected component main
+hm kisi bhi vtx se kisi vtx tk ja skte hai, kyuki vha directions ni hoti hm busstop
+edges dekh k ans nikal lete hai.
+
+But directed graph m ho skta hai hmare edges wise graph connected ho, but hme vo
+components nikalne hai jahan hm kisi bhi vts se jaye or kisi bhi vtx tk ja ske, that's
+called strongly connected component.
+
+Now, ye to pkka dfs lgega but yha sochna ye ki kis order m lgaye as for example
+
+1, 2,3 ek cycle hai and 3->4 edge jari hai and then 4,5,6 ek cycle hai, to yha
+agar m 4 se dfs lgaun to 2 and aaega which is correct, but agar 1,2,3 m kisi se
+dfs lgaun to 1 ans aaega which is wrong.
+
+So meaning order matter krega, to hm dfs lgaenge ad back track m stack m daldenge which
+is kind of topological sort, to hme confirm for above graph top ka element first group se
+hi hoga, kyuki 3->4 meaning 4 vala phle stack m dl jaega.
+
+1. Group identification is done, that is 1st group. Now we will reverse the edges
+which do not have any impact on cycle the path will be same but the edge 3->4 will
+reverse to 4->3, now stack k order m dfs lgaenga we will get correct ans
+
+public static void solve(ArrayList<Edge>[] g, ArrayList<Edge>[] rg , int n){
+    	Boolean[] visited = new Boolean[n];
+    	Arrays.fill(visited , false);
+    	ArrayList<Integer> order = new ArrayList<>();
+
+    	// step 1 : call dfs on the main graph and fill the order array
+    	for(int i = 0; i < n; i++){
+    		if(!visited[i]){
+    			dfs(i, g, visited, order);
+    		}
+    	}
+    	Arrays.fill(visited , false);
+    	char c = 'A';
+    	// step 2 call dfs in the reverse order of (order array) in the reverse graph
+    	for(int i = order.size() - 1; i >= 0; i--){
+    		int m = order.get(i);
+    		if(!visited[m]){
+    			System.out.print(c + ": ");
+    			dfs_reverse(m, rg, visited);
+    			c++;
+    			System.out.println();
+    		}
+    	}
+    }
+
+public static void dfs(int src, ArrayList<Edge>[] g, Boolean[] visited,
+        ArrayList<Integer> order){
+	visited[src] = true;
+
+	for(Edge e : g[src]){
+    	if(!visited[e.nbr]){
+    			dfs(e.nbr, g, visited, order);
+    		}
+    	}
+	order.add(src);
+}
+
+public static void dfs_reverse(int src, ArrayList<Edge>[] g, Boolean[] visited){
+	visited[src] = true;
+    System.out.print(src + " ");
+    for(Edge e : g[src]){
+		if(!visited[e.nbr]){
+            dfs_reverse(e.nbr, g, visited);
+    	}
+	}
+}

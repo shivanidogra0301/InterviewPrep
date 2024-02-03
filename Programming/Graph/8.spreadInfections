@@ -1,0 +1,36 @@
+/*
+1. You are given a graph, representing people and their connectivity.
+2. You are also given a src person (who got infected) and time t.
+3. You are required to find how many people will get infected in time t,
+ if the infection spreads to neighbors of infected person in 1 unit of time.
+
+*/
+
+
+ArrayDeque<Pair> queue = new ArrayDeque<>();
+      queue.add(new Pair(src, 1));
+      int[] visited = new int[vtces];
+      while(queue.size() > 0){
+         Pair rem = queue.remove();
+
+         if(visited[rem.v] > 0){
+            continue;
+         }
+         visited[rem.v] = rem.time;
+
+         // agar t time se zyada mila to break count nhi bdhaenge
+         if(rem.time > t){
+            break;
+         } else {
+            count++;
+         }
+         
+         for (Edge e : graph[rem.v]) {
+            if (visited[e.nbr] == 0) {
+               queue.add(new Pair(e.nbr, rem.time + 1));
+            }
+         }
+      }
+
+      System.out.println(count);
+   }

@@ -1,0 +1,58 @@
+Single source shortest path algo jisme hme given source 1 hai, to usme hr vtx
+pe jane ka minimum path nikalte hai with complexity O(v3).
+
+Also use to detect negative weight cycle
+
+Key Points
+1. Hm kabhi bhi negative weight cycle m shortest path ni nikal skte because jitna
+cycle m travel krenge utna negative jata jaega so not practically possible.
+
+2. negative weights graph which do not have negative wt cycle, we can use bellman ford
+dijkstra will not work on negative wts.
+
+Simple graph k edges ko v times iterate krenge and formula use krenge
+for given edge, where u -> v
+  minPath[u] + wt < minPath[v] so update minPath[v] =  minPath[u] + wt
+
+keyPoint
+Hm Edge ko kisi bhi order m execute kr skte hai and hmesha aaega, but how this works?
+jb bhi ham
+in ith iteration i calculates the minimum of atleast ith path length
+meaning agar 2nd iteration chlri hai, to 2 length path jo minimum ans denge vo sb solve
+ho jate hai isliye hm total vts tk loop chlate kyuki vtc+1 length vale path will surely be a cycle
+jo kbhi bhi minimum ans ni dega,
+
+Now to check negative wt cycle, run the loop one more time if minPath[u] + wt < minPath[v]
+condition is true again that mean -ve cycle exist
+
+
+static int[] distances;
+static boolean negativeCycle = false;
+	public static void solve(ArrayList<ArrayList<Integer>> graph){
+
+        // iterating v times
+		for(int i = 0; i < distances.length - 1; i++){
+            // on every edge
+			for(ArrayList<Integer> e : graph){
+				int u = e.get(0);
+				int v = e.get(1);
+				int w = e.get(2);
+                // to handle edge case as if value is Max_value means it's not
+                explored yet.
+				if(distances[u] != Integer.MAX_VALUE && distances[u] + w < distances[v]){
+					distances[v] = distances[u] + w;
+				}
+			}
+		}
+
+		for(ArrayList<Integer> e : graph){
+				int u = e.get(0);
+				int v = e.get(1);
+				int w = e.get(2);
+				if(distances[u] != Integer.MAX_VALUE && distances[u] + w < distances[v]){
+					System.out.println("Negative weight cycle found!");
+					negativeCycle = true;
+					break;
+				}
+			}
+	}

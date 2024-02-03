@@ -1,0 +1,58 @@
+Connected Components (Undirected path)
+
+below is also a graph, but disconnected. We want to count total Connected
+Components. Again using DFS, but kyuki graph disconnected hai, hme main function
+m vertices se loop chlake dfs call krna ho and jb dfs chlega vo ek connected Component
+ko vis mark krdega, to uska count 1 hi aaega
+
+1-2  3-4  4 - 5
+           \  |
+            6
+in main() {
+    int count;
+    boolean[] vis = new boolean[12];
+
+    for(int v = 0; v < vtcs; v++) {
+        if(vis[v] == false){
+            dfs(v, des, vis);
+            cnt++;
+        }
+    }
+}
+if cnt == 1. i.e graph is connected
+
+2. No of Island
+matrix given 2d, jo ki virtually graph hai, jisme hr cells apne nbr i.e top, bottom,left,
+right se connected hai.
+Find total islands
+https://leetcode.com/problems/number-of-islands/description/
+1. vis[row][col] created.
+2. iterated over matrix, if 
+if(arr[i][j] == 0 && vis[i][j] == false){
+    dfs(i, j, vis, arr);
+    cnt++;
+}
+               //T    R       L     B
+int[][]dir = [[-1,0] [0,1] [0,-1] [1,0]]
+
+public static void dfs(int[] arr, boolean[]vis, int r, int c){
+    if(r < 0 || r >= row.length || c < 0 || c >= co.length ||
+    vis[r][c] == true || arr[r][c] == 1) { // 1 means water
+        return;
+    }
+    vis[r][c] = true;
+    for(dir: dirs) {
+        int row = r + dir[0];
+        int col = c + dir[1];
+
+        dfs(arr, vis, row, col);
+    }
+}
+
+// No of friends, kuch relations(edfges) given, hme 1 group se 1 bnda select krna hai
+total ways to select a pair.
+1. Find the size of connected Components. [2,3,4]
+ans is 2*3 + 2 * 4 + 3 * 4 loop i=0, j = i+1
+
+
+

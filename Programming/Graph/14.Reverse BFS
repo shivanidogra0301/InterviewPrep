@@ -1,0 +1,53 @@
+https://leetcode.com/problems/01-matrix/
+
+given 01 matrix, we want to find distance from 1 to closest 0 available.
+
+Now if we think direct, hme hr 1 se clossest 0 find krna hai, kyuki closest krna hai to ye
+to pkka hai bfs use hoga. to hm hr 1 se bfs chla skte h, and calculate kr skte hai ki
+jese hi closest 0 aaye, answer daldo. 
+but time complexity here wold be o(v) * o(v+E).
+
+But if we think otherwise, ki hm multiple source bfs lgaye , yani hr 0 ko queue m dalde
+or vo apne closest 1 ka distance calculate krde. to ye problem o(v+E) m solve ho jaegi
+kyuki hmne source already de diye hai i.e all 0s, now simple bfs run hoke unka level
+wise distance calculate hoga jo ki minimum hoga.
+
+ public int[][] updateMatrix(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        
+        Queue<int[]> q = new LinkedList<>();
+        
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                // adding all the sources in queue
+                if(matrix[i][j] == 0){
+                    q.add(new int[]{i,j});
+                }
+                // marking 1 cell to unvisted.
+                else{
+                    matrix[i][j] = -1;
+                }
+            }
+        }
+        
+        int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
+        while(q.size() > 0){
+            int[] removed = q.remove();
+            int curx = removed[0]; // from there we check adjacent positions
+            int cury = removed[1];
+            
+            for(int[] dir : dirs){  // for all four directions
+                int x = curx + dir[0]; //new cell in  one direction
+                int y = cury + dir[1];
+                                                            // means visited
+                if(x < 0|| y < 0 || x >= row || y >= col || matrix[x][y] >= 0){
+                    continue;
+                }
+                // becuase bfs so only smallest answer will be there
+                matrix[x][y] = matrix[curx][cury] + 1;
+                q.add(new int[]{x,y});
+            }
+        }
+        return matrix;
+    }

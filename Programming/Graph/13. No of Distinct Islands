@@ -1,0 +1,43 @@
+// same no of island nikalne hai where 1 means land and 0 means water. To normal question
+is number of connected component nikalne hai njiski value = 1 hai.
+
+But distinct shape ka count chaiye to hr call se phle t l B R se path bna lenge
+and usko hashset m store kr denge, return kr denge hashset ka size.
+
+static HashSet<String> set;
+	static StringBuilder s;
+	public static void dfs(int[][] grid, int i, int j) {
+		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] == 0) {
+			return;
+		}
+
+		grid[i][j] = 0;
+
+		s.append('U');
+		dfs(grid, i - 1, j);
+
+		s.append('L');
+		dfs(grid, i, j + 1);
+
+		s.append('D');
+		dfs(grid, i + 1, j);
+
+		s.append('R');
+		dfs(grid, i, j - 1);
+		
+	}
+	public static int numberofDistinctIslands(int[][] grid) {
+		set = new HashSet<>();
+		int n = grid.length;
+		int m = grid[0].length;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (grid[i][j] == 1) {
+					s = new StringBuilder("");
+					dfs(grid, i, j);
+					set.add(s.toString());
+				}
+			}
+		}
+		return set.size();
+	}

@@ -1,0 +1,17 @@
+creation : 
+Adjaceny Matrix, if row = 1 column 2 if there exists
+edge arr[1][2] = arr[2][1] = true constraint for this 10,000 becuase isse 
+zyada memory m bn ni paega
+
+Adjacent list =
+ArrayList<Edge>[] graph = new ArrayList[8]; where 8 is total vertices
+now Edge = class Edge {
+    int src;
+    int des;
+    int wt;
+}
+graph[0] = represent 0 se start hone vali edges ki ArrayList
+step1. initialise graph with empty arrayList
+Step2. Iterate over edges,  there exist 3 things src, dest, wt.
+graph[src].add(new Edge(src, des,wt));
+graph[des].add(new Edge(des, src, wt));  // if bidirectiona;

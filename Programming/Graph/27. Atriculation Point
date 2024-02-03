@@ -1,0 +1,125 @@
+
+/*
+articulation or critical points => if removing a node from the graph results in 
+increasing the number of connected components then
+that point is critical node or articulation point
+
+bridge = if removing a edge from the graph results in increasing the 
+number of connected components then
+that edge is called bridge.
+par[] = 1->2 aare hai 2 ka parent 1 hoga ye store kr lenge kyuki hr point pe check krna
+        ki hm iss path aare hai ya ni
+
+discovery[] = jis time pe node discover hogi ye hmesha fixed rhega
+            1->2  to 1 ka discovery = 1 and 2 ka discovery = 2
+
+
+low[]  = jis path se aaye hai usko ignore krke, koi dusre path m jo nodes present hai,
+            unme jiska discovery minimum hai vo time store krna hai.
+
+Solution low[v] >= disc[u] that means u is articulation point.
+why?  upr expression agar false ka mtlb,
+ v ek aisi node ko touch krra hai jo u se phle discover hui hai, to hm u ko hta bhi de
+ to jo edge v and low[v] jo node hai jo connect hori hai vo graph ko disconnet ni hone degi
+
+ example     1 -----2 
+             |      |     idhar agar 4 is articulation point because low[v] 5,6 m lowest ka discovery time pda hoga
+            4 -------3  
+            |
+            5---6
+
+but agar 5 and 1 koi edge present hai to low[5] m min(5,6,1) ka discovery time hoga
+and we know 1 is discovered at 1, to practically dekhe to 4 ko hta bhi dia to 5-1 edge
+graph ko connected rkhegi. 
+
+Key POints:
+1. jb v visited hai or hmare path se alag hai 
+low[u] = Math.min(low[u],disc[v]); idhr hm low[v] ni likh skte kyuki usme shyd aisi
+node ka answer ho jo u tak phochne vale path m aari ho jo wrong hoga.
+
+2. count++ nhi krenge hashet m dalke, size count krenge kyuki 4 agar articulation point
+hai or vo 3 components m divide krra hai, to hm low[v] >= disc[u] more than one time
+true ho skti for 4, but count ek hi krna hai isliye.
+
+3. Original source ka case alag handle hoga kyuki use case m low[v] >= disc[u] ye
+condition hmesha true hogi but os hmesha articulation point ni hoga. Ogsrc m agar 2 edges nikli
+hai or unke nodes kabhi bhi connect ni hue to jo nbr vala loop 2 time chlega which
+mean og src is articulation point but agar unki node kahi bhi connected hui vo src ka
+loop 1 hi chalengi fir kyuki dfs kabhi to call ho jaega
+
+
+4. For articulation edge, 3 point ignore krna hai and condition jo check hogi vo hogi
+low[v] > disc[u] hm equal nhi consider krenge kyuki agar uski us node tk bhi hai to
+mt vo apne parent se ek or edge se connected hai, which means ek edge hta bhi to fayda ni.
+
+
+int[] par;
+    int[] disc;
+    int[] low;
+    boolean[] vis;
+    int time;
+    List<List<Integer>> ans;
+    List<List<Integer>> graph;
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        graph = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            graph.add(new ArrayList<>());
+        }
+        for(int i =0 ; i < connections.size(); i++){
+            int u = connections.get(i).get(0);
+            int v= connections.get(i).get(1);
+            graph.get(u).add(v);
+            graph.get(v).add(u);                   
+        }
+        par = new int[n];
+        disc = new int[n];
+        low = new int[n];
+        vis = new boolean[n];
+        ans = new ArrayList<>();
+        time = 0;
+        articulationpoint(0);
+        return ans;
+        
+    }
+    public  void articulationpoint(int u){
+        low[u] = disc[u] = time;
+        time++;
+        vis[u] =true;
+        int count=0; // only to check source is articulation or not
+        for(int v : graph.get(u)){
+            // 1 - 2 m gye to par[2] == 1 pda hai, now 2 k nbrs check honge 1 aaega
+            // we check below condition par[2] == 1 hai means isi path se aaye h do nothing 
+            if(par[u] == v){
+                continue;
+            }
+            //v visted hai, but hm is path se ni aaye h, to apna low compute krenge
+            else if(vis[v] == true){
+                low[u] = Math.min(low[u],disc[v]);
+            }
+            // first time visit
+            else{
+                // parent updated for v
+                par[v] = u;
+                //dfs call
+                count++;
+                articulationpoint(v);
+                // v ka low calculate hogya, agar v koi aisi node ko point krra hai to u bhi krega kyuki nbr hai
+                low[u] = Math.min(low[u], low[v]);
+                // original source
+                if(par[u] == -1) {
+                    // agar os hai and more than one bari dfs call kia to ans hai
+                    if(count >= 2){
+                        and.add(u)
+                    }
+                }
+                else{
+                     //back edge not present, u is articulation
+                    if(low[v] >= disc[u]) {
+                        and.add(u);
+                    }
+                }
+                             
+            }
+        }
+    }
+}

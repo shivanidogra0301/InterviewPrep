@@ -1,0 +1,81 @@
+ Directed acyclic graph m apply hoti h only without any self loop 
+ it a order of vertices in such a way that if a edge is directed from u to v, u  must be
+ presnt before v in the topological sort.
+
+ Solution : Get connected components code, just use a stack while backtracking which means
+ we will iterate in depth from 1, which mean when we return to 1, ebery components
+ which can we called from path of 1 is already present in stack, so 1 can also be
+ put in the stack.
+
+
+ // call this function from ebery vts to handle disconnected graph.
+public  void print(ArrayList<Edge>[] graph , int src, boolean[] visited, Stack st){
+        visited[src] = true;
+        for(Edge e : graph[src]){
+            if(visited[e.nbr] == false){
+                print(graph,e.nbr, vis, st);
+            }
+        }
+        //backtrack
+        st.push(src); 
+    }
+
+Note: topological sort do not work for graphs having cycle or undirected becuase in that we will not
+be able to know which node is independent as every node will have dependancy.
+
+Now we can also calculate topological sort using iteration, that algo is called
+Kahn's algorithm, which do not use recursion. But key point of using this instead of
+dfs is that, if we did not get the ans that means there a cycle exist in graph,
+so we can use this algorithm to detect cycle in graph.
+
+Kahn's algorithm
+Steps1. calculate indegree of each vertice that no of edges cominng in a vtx.
+Step2. add those vts who have indegree = 0 which means that vertex is independent and can
+be put in starting or top sort.
+Step3. when we print a vts then check -1 indegree of its nbr, if there exist a nbr whose
+degree become = 0 becuase of adding the src, means that also became independent now,
+add that to queue.
+if graph is disconnected, so we can put that disconnected node any where in the sort.
+
+int[] indeg = new int[v];
+		int[] ans = new int[v];
+		int idx = 0;
+		Queue<Integer> q = new ArrayDeque<>();
+
+		// calculate indegree of each vertex
+		for(int i = 0; i < v; i++){
+			for(int nbr : graph.get(i)){
+				indeg[nbr]++;
+			}
+		}
+
+		//add in the queue whose indegree is 0;
+		//note if all the vertices have indegree == 1 means graph is cyclic
+		for(int i = 0; i < v; i++){
+			if(indeg[i] == 0){
+				q.add(i);
+			}
+		}
+
+		while(q.size() > 0){
+			int r = q.remove();
+			ans[idx] = r;
+			idx++;
+
+			//add all the nbrs and decrease their indegree
+			for(int nbr : graph.get(r)){
+				indeg[nbr]--;
+
+				if(indeg[nbr] == 0){
+					q.add(nbr);       
+				}
+			}
+		}
+        // add vtcs is added
+		if(idx == v){
+			print(ans);
+		}
+		else{
+			return;
+		}
+	}

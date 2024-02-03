@@ -1,0 +1,41 @@
+
+remove mark* work add*
+BFS is also a graph iteration but here we fist visit all nbrs then go deep , in comparison
+it is like level order traversel of binary tree.
+We use queue, we add all the nbrs first in queue, then start removing from first
+one by one it is call bfs.
+
+boolean[] visited = new boolean[vtces];
+        // dequeue add last remove first
+        ArrayDeque<Pair> queue = new ArrayDeque<>();
+        queue.addLast(new Pair(src, "" + src));
+
+        while (!queue.isEmpty()) {
+            Pair p = queue.removeFirst();
+
+            if (visited[p.v]) { // if we come here that means graph has a cycle
+                continue;
+            }
+
+            visited[p.v] = true;
+            System.out.println(p.v + "@" + p.psf);
+            
+            for (Edge e : graph[p.v]) {
+                if (!visited[e.nbr]) {
+                    queue.addLast(new Pair(e.nbr, p.psf + e.nbr));
+                }
+            }
+        }
+
+
+Reason:  0 ----- 1
+         |       | => cycle, 
+         2 ------3
+0                     vis    q   
+remove 0 add its nbr  0     1 2
+remove 1 add its nbr 0 1     2 3
+remove 2 add its nbr 012     3 3 // duplicate adding becuase from 0 there are 2 ways
+to reach 3 023 013 , that makes it a cycle, so the above check will tell
+whether the graph have cycle or not.
+
+we will iterate over all vtcs as graph can we disconnected.

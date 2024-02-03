@@ -1,0 +1,84 @@
+1. Shortest Path in term of edges not weighted
+(both unidirection and bidirectional)
+Solution BFS gives shortest path as it goes by level order, time complexity = O[v+E]
+
+DFS time complexity also = o[V+E] because we covering every edge and vertixe whoever ismax 
+ is the time complexity. But dfs does not always give shortest path
+
+
+ Shortest path in terms of weights . Do not work for negative weights.
+ Single source shortest path
+ solution Dijkstra O ( V + E l o g V ) . = O(E+v) * O(logV) iterative every vertex+ priority queue search complexity
+= O(e+logV)
+
+ Dijkstra Algorithm
+ Everything is same as BFS but instead of using queue we will use priority queue
+ why? becuase hm hr point pe wsf rkhenge and check krenge jo sbse km hoga vhi path ko
+ select krke aage bdhenge and we will get single source shortest path.
+
+public Pair(int v , String psf , int wsf){
+           this.v = v;
+           this.psf = psf;
+           this.wsf = wsf;
+       }
+       // for priority queue
+       public int compareTo(Pair o){
+           return this.wsf - o.wsf;
+       }
+boolean[] visited = new boolean[vtces];
+PriorityQueue<Pair> q = new PriorityQueue<>();
+q.add(new Pair(src, src + "" , 0));
+      
+while(!q.isEmpty()){
+    Pair rp = q.remove();
+    if(visited[rp.v]){
+        continue;
+    }
+    visited[rp.v] = true;   
+    System.out.println(rp.v + " via " + rp.psf + " @ " + rp.wsf);
+          
+    for(Edge e : graph[rp.v]){
+        if(!visited[e.nbr]){
+            q.add(new Pair(e.nbr , rp.psf + e.nbr , rp.wsf + e.wt));
+        }
+    }
+}
+
+Minimum spanning tree
+A graph minimum edges rkhenge, to ye more than 1 possible ways hai but unme se jinki edges wt
+ka sum minimum hoga, vo hoga minimum spanning tree.
+
+Algorithm use: Prims , time complexity same as Dijkstra
+
+Overview is, manlo hmne sari edges ko ek priority queue m dalte rhe according to bfs,
+ab jin edge ka weight sbse km hai vo sbse phle pick hogi, or minimum spanning tree bna degi
+Becuase, spanning tree m cycle nhi hoti, to hm kind of vhi edge nikal rhe honge jo
+cycle bna rhi vrna acyclic graph m ek hi spanning tree possible hai. Ab hm cycles hta rhe
+hai basically or choose krne k process m minimum wt valid edge ko pick krre hai so
+it will result in MST
+
+Now, key point the code is exactly same a dijkstra but instead of using wsf we will
+compare the edges wt only.
+
+boolean[] visited = new boolean[vtces];
+        PriorityQueue<Pair> q = new PriorityQueue<>();
+        q.add(new Pair(0, -1, 0));
+
+        while (!q.isEmpty()) {
+            Pair rp = q.remove();
+            if (visited[rp.v]) {
+                continue;
+            }
+
+            visited[rp.v] = true;
+            if (rp.v != 0) {
+                System.out.println("[" + rp.v + "-" + rp.aqv + "@" + rp.wt + "]");
+            }
+
+            for (Edge e : graph[rp.v]) {
+                if (!visited[e.nbr]) {
+                    q.add(new Pair(e.nbr, rp.v, e.wt));
+                }
+            }
+        }
+    }

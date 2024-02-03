@@ -1,0 +1,64 @@
+
+
+//Function to find the minimum number of swaps required to sort the array.
+
+1. Make a ans upto which we want the current array to change but we will their original
+indices as well to know from which index that value came.
+2. so if we analyse the situation, say ki 4 th ki correct position 2 index hai, 
+to hm dekhenge 4 ko 2nd pe dalna hai, ab 4 jahan se htt rha vha kya dalenge
+again sorted array m check ki vha 5 aaega, jo abhi 9 th position pe to agar 5 9th se uthke
+4 ki current pe aaega, to ab 9th pe correct kya hai vo soreted se dekhenge by doing this
+we are making a cycle. if cycle length is 4 that means we need 3 swap to do that if a cycle
+is completed. we won'e need to process it again. that is our solution 
+
+
+
+    public int minSwaps(int nums[])
+    {
+        Pair[] arr = new Pair[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            arr[i] = new Pair(nums[i], i);
+        }
+        //sorted array with its original index
+        Arrays.sort(arr);
+        int ans = 0;
+        
+        boolean[] vis = new boolean[nums.length];
+        
+        for(int i = 0; i < nums.length; i++){
+            // after sorting bhi same index hi rkhna hai meaning isko change ni krenge
+            if(vis[i] == true || arr[i].idx == i){
+                continue;
+            }
+            
+            int j = i;
+            //cycle length
+            int clen = 0;
+
+            // calculating lenght of cycle
+            while(vis[j] == false) {
+                vis[j] = true;
+                clen++;
+                // sorted value jaha se aayi uss index ka ans bhi dhundge
+                j = arr[j].idx;
+            }
+            
+            ans += clen-1;
+            
+        }
+        return ans;
+    }
+    
+    class Pair implements Comparable<Pair>{
+        int val;
+        int idx;
+        
+        Pair(int val, int idx) {
+            this.val = val;
+            this.idx = idx;
+        }
+        
+        public int compareTo(Pair o){
+            return this.val - o.val;
+        }
+    }

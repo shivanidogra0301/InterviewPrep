@@ -1,0 +1,39 @@
+https://leetcode.com/problems/swim-in-rising-water/description/
+
+if one cell have elevation of 2 and its adjacent have value 5 to hme minimum 5 minute ka tim lgega
+dono cell m swim krne m, so hme minimum time btana hai end of matrix jane m
+
+Application of Dijkstra algo which gives minimum distance between two nodes in terms
+of wts, but isme just ek trick krna hai jahan hm wsf calculate krte hai udhr
+addition hota prev wt + nbr wts and we add that node in queue. Ab same queue m node
+dlegi but hm Max lenge (src wt, nbr wt Max) kyuki tbhi hm uss nbr m ja skte hai and
+priorityQueue m dalte rhenge
+
+ PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pair(0,0,grid[0][0]));
+        boolean[][] vis = new boolean[grid.length][grid[0].length];
+        int[][] dirs = {{-1,0},{0,1},{1,0},{0,-1}};
+        while(pq.size() > 0){
+            Pair rem = pq.remove();
+            if(rem.row == grid.length-1 && rem.col == grid[0].length-1){
+                return rem.msf;
+            }
+            
+            if(vis[rem.row][rem.col] == true){
+                continue;
+            }
+            vis[rem.row][rem.col] = true;
+            for(int i = 0; i < 4; i++){
+                int nr = rem.row + dirs[i][0];
+                int nc = rem.col + dirs[i][1];
+                
+                if(nr < 0 || nc < 0 || nr >= grid.length || nc >= grid[0].length || vis[nr][nc] == true){
+                    continue;
+                }
+                
+                pq.add(new Pair(nr,nc,Math.max(rem.msf,grid[nr][nc])));
+            }
+        }
+        //not required cause loop se value pkka jaegi
+        return 0;
+    }

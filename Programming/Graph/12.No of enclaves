@@ -1,0 +1,48 @@
+https://leetcode.com/problems/number-of-enclaves/description/
+
+hme question m 0 means ocean and 1 means land given. Hme vo 1 ka count nikalna hai jo
+kisi bhi brder se directly ya indirectly 1 se connected na ho ya fir khud bhi border pe
+na ho.
+
+Solution: hm sare border 1 one se dfs call krenge, and jo bhi unse connected hai unk 0 mark
+kr denge. now jb ye khtm ho jaega, matrix m vhi one bchenge jo  border se connected nhi hai
+hm unka cound nikal lenge.
+
+
+public int numEnclaves(int[][] grid) {
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+            if(i == 0 || j == 0 || i == grid.length -1 ||j == grid[0].length-1){
+                    if(grid[i][j] == 1)
+                        dfs(grid,i,j);
+                }
+            }
+        }
+        int ans = 0;
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j] == 1){
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+    
+    
+ public static void dfs(int[][] grid, int r, int c){
+        grid[r][c] = 0;
+
+        int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
+        int count = 0;
+        for(int i =0; i < 4; i++){
+            int nr = r + dir[i][0];
+            int nc = c+dir[i][1];
+            // check range m h ya ni
+            if(nr < 0 || nc < 0 || nr >= grid.length || nc >= grid[0].length  || grid[nr][nc] == 0){
+                continue;
+            }
+            dfs(grid, nr, nc);
+        }
+
+     }

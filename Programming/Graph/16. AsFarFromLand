@@ -1,0 +1,56 @@
+https://leetcode.com/problems/as-far-from-land-as-possible/
+
+Given an n x n grid containing only values 0 and 1, where 0 represents water 
+and 1 represents land, find a water cell such that its distance to the nearest 
+land cell is maximized, and return the distance. If no land or water 
+exists in the grid, return -1.
+
+nearest 1 cell ka distance maximise btana hai, sb 1 ko queue m dal denge, bfs lgange
+jo max level aaega vo ans hoga. 
+
+
+class Pair{
+        int i;
+        int j;
+        int dsf;
+        Pair(int i, int j, int dsf){
+            this.i = i;
+            this.j = j;
+            this.dsf = dsf;
+        }
+    }
+    public int maxDistance(int[][] grid) {
+        Queue<Pair>q = new LinkedList<>();
+        int max = -1;
+        int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+        
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                if(grid[i][j] == 1){
+                    q.add(new Pair(i,j,0));
+                }
+            }
+        }
+        
+        if(q.size() == 0 || q.size() == grid.length * grid[0].length){
+            return -1;
+        }
+        
+        while(q.size() > 0){
+            Pair rm = q.remove();
+            int i = rm.i;
+            int j = rm.j;            
+            max = Math.max(max, rm.dsf);          
+            for(int[] dir : dirs){
+                int ni = i + dir[0];
+                int nj = j + dir[1];
+                if(ni < 0 || nj < 0 || ni >= grid.length || nj >= grid[0].length || grid[ni][nj]  == 1){
+                    continue;
+                }               
+                q.add(new Pair(ni,nj,rm.dsf+1));
+                grid[ni][nj] = 1;                
+    }
+}
+        
+    return max;
+}

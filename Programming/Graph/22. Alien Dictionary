@@ -1,0 +1,97 @@
+Application of topologial sort.
+Hme pta hai agar, a -> b ek edge present means top sort m "b" ko "a" se phle aana hoga. Now hme kuch words diye hai
+uska sort order btana hai simple hai, agar wrt wet dia hai to mtln r ki priority e se zyada hai to hme ans main
+r -> e edge bna denge now top sort m  it will be print like "er" which is asc order sort lexicographically
+
+And kyuki hme btana hai ki correct ans milega ya nhi to hm kahn algo use krenge agar cycle present hui means
+sorting is not possible will return -1.
+
+
+{
+        HashMap<Character, HashSet<Character>> graph = new HashMap<>();
+        HashMap<Character, Integer> indeg = new HashMap<>();
+        
+        // indeg ko initialise krna must hai, vrna vo vts jiska graph m koi relation ni h vo print ni hogi as
+        hm indeg dekh k hi to queue m dalenge.
+        for(int i = 0; i < dict.length; i++){
+            String st = dict[i];
+            for(int j = 0; j < st.length(); j++){
+                char ch = st.charAt(j);
+                indeg.put(ch,0);
+            }
+        }
+        
+        for(int i = 0; i < N - 1; i++){
+            String word = dict[i];
+            String nword = dict[i+1];
+            int len = Math.min(word.length(), nword.length());
+            
+            for(int j = 0; j < len; j++){
+                char a = word.charAt(j);
+                char b = nword.charAt(j);
+                
+                if(a == b){
+                    continue;
+                }
+                else{
+                    
+                    if(graph.containsKey(a)){
+                        HashSet<Character> set = graph.get(a);
+
+                        // this also needs to be check kyuki agar words check krte krte a -> b edge firse
+                        // agyi then graph m kuch frk ni pdega kyuki hme unique le rkha hai lekin
+                        indeg + 2 ho jaegi which is wrong. so keep track of that as well.
+                        if(set.contains(b) == false){
+                            indeg.put(b,indeg.get(b)+1);
+                            set.add(b);
+                            graph.put(a,set);
+                        }
+                    }
+                    else{
+                        HashSet<Character> set = new HashSet<>();
+                        set.add(b);
+                        indeg.put(b, indeg.getOrDefault(b, 0)+1);
+                        graph.put(a, set);
+                    }
+                    break;
+                }
+            }
+            
+        }
+        
+        return topSort(graph, indeg);
+        
+        
+    }
+    
+    public static String topSort(HashMap<Character, HashSet<Character>> graph,
+        HashMap<Character, Integer> indeg) {
+        Queue<Character> q = new LinkedList<>();
+        
+        for(char c: indeg.keySet()){
+            Integer val = indeg.get(c);
+            
+            if(val == 0){
+                q.add(c);
+            }
+        }
+        
+        String psf = "";
+        
+        while(q.size() > 0){
+            char c = q.remove();
+            
+            psf += c;
+            indeg.put(c, indeg.get(c)-1);
+            
+            for(char nbr: graph.getOrDefault(c, new HashSet<>())) {
+                indeg.put(nbr, indeg.get(nbr)-1);
+                if(indeg.get(nbr) == 0) {
+                    q.add(nbr);
+                }
+            }
+        }
+        
+        return psf;
+        
+    }

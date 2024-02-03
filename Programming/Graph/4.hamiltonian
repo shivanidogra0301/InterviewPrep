@@ -1,0 +1,40 @@
+
+a Hamiltonian path (or traceable path) is a path in an undirected or directed graph 
+that visits each vertex exactly once. A Hamiltonian cycle (or Hamiltonian circuit) is a 
+cycle that visits each vertex exactly once.
+
+1. use printallpaths function, but in base case just check that
+all vertices are covered exactly once. so simple vis k liye hashset use krlenge jo duplicate
+ka handle krlega and if set.size()== vertices, we have Hamiltonian path
+
+now a path can be cycle it there exist a edge between last vtc and src
+
+
+public static void printAllPath(ArrayList<Edge>[] graph, int src, HashSet<Integer> visited, String psf, int os) {
+
+    if (visited.size() == graph.length - 1) {
+        System.out.print(psf);
+
+        boolean cycle = false;
+        for (Edge e : graph[src]) {
+            if (e.nbr == os) { // original source
+                cycle = true;
+                break;
+            }
+        }
+
+        if (cycle) {
+            System.out.println("*");
+        } else {
+            System.out.println(".");
+        }
+    }
+
+    visited.add(src);
+    for (Edge e : graph[src]) {
+        if (!visited.contains(e.nbr)) {
+            printAllPath(graph, e.nbr, visited, psf + e.nbr, os);
+        }
+    }
+    visited.remove(src);
+}

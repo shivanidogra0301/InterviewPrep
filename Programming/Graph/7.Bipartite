@@ -1,0 +1,39 @@
+agar hm ek graph ko 2 sets of vertices m divide kar ske such that
+edge shpuld be across sets not in between and all vertices should be present in that sets
+
+Solution: acyclice graph is always bipartite
+        even length cyclic graph is also bipartite
+        odd length cycle is not
+
+solution simple h, alternate level ki vertices ko ek set m dalo
+i.e  1  ----- 2
+     |        |  => set 1 = 1,4  set2 = 2,3 but we cannot do that in odd length cycle
+     3 -------4
+
+
+     public static boolean checkBipartite(ArrayList<Edge>[] graph, int[] visited, int src) {
+
+        ArrayDeque<Pair> q = new ArrayDeque<>();
+        q.addLast(new Pair(src, src + "", 0));
+
+        while (!q.isEmpty()) {
+            Pair rp = q.removeFirst();
+
+            //means it is visited
+            if (visited[rp.v] != -1) {
+                //last time jb visited hua, uska level agar abhi current level k brbabr
+                nhi h mtlb odd cycle
+                if (rp.level != visited[rp.v]) {
+                    return false;
+                }
+            }
+
+            visited[rp.v] = rp.level;
+            for (Edge e : graph[rp.v]) {
+                if (visited[e.nbr] == -1) {
+                    q.addLast(new Pair(e.nbr, rp.psf + e.nbr, rp.level + 1));
+                }
+            }
+        }
+        return true;
+    }
