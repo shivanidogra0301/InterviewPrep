@@ -1,0 +1,3 @@
+n is size of array
+total subarray = n(n+1)/2
+total subsquence = 2^n

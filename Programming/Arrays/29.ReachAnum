@@ -1,0 +1,23 @@
+https://leetcode.com/problems/reach-a-number/description/
+At any point we can go left which is -ve of ith position so if any point we move forward
+from the target, and the diffrence is even, so we can make a move left to make it equal
+moving left will always result in target-2k where k is ith step
+public int reachNumber(int target) {
+        int i = 0;
+        int sum = 0;
+        if(target < 0){
+            target = - target;
+        }
+        while(true){
+            i++;
+            sum += i;
+            
+            if(sum == target || ((sum > target) &&(target - sum)%2 == 0)){
+                break;
+            }
+           
+        }
+        return i;
+        
+        
+        }

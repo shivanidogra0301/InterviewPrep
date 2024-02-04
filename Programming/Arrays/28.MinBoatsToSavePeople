@@ -1,0 +1,25 @@
+https://leetcode.com/problems/boats-to-save-people/description/
+given wts of people, find minimum boats to caary people, 
+max wts in boats can we = limit an only 2people can be in the boats
+
+so problem break into 2 sum application where we need 2 people having wt <= limit.
+
+1. sort the array
+2. try to pair max wt person with min, if not possible he have to sit on boat alone
+as he cannot be paired with anyone
+
+public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int i = 0, j = people.length - 1;
+        int ans = 0;
+
+        while (i <= j) { 
+            // 2people paired           
+            if (people[i] + people[j] <= limit)
+                i++;
+            j--;
+            ans++;
+        }
+
+        return ans;
+    }

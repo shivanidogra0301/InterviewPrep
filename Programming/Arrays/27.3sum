@@ -1,0 +1,42 @@
+/*
+Given array having duplicate value find triplet sum having sum = 0, but do not use
+same triplets
+
+1. sort the array, fixed one number and run two two find 2pair sum.
+2. To avoid, duplicates, if nums[i] == nums[i-1] because array is sorted, skip the value
+same when you find the triplet, then the range lo hi should be change until new
+number comes in.
+
+
+*/
+public List<List<Integer>> threeSum(int[] nums) {
+        int i = 0;
+        Arrays.sort(nums);
+        
+        List<List<Integer>> ans = new ArrayList<>();
+        while(i < nums.length-2){
+            if(i > 0 && nums[i-1] == nums[i]){
+                i++;
+                continue;
+            }
+            if(nums[i] > 0){
+                break;
+            }
+            int target = 0 - nums[i];
+            int lo = i+1;
+            int hi = nums.length-1;
+            while(lo < hi){
+                if(nums[lo] + nums[hi] == target){
+                    ans.add(Arrays.asList(nums[i],nums[lo],nums[hi]));
+                    while(lo < hi && nums[lo+1] == nums[lo]) { lo++;}
+                     while(lo < hi && nums[hi-1] == nums[hi]) { hi--;}
+                    lo++;
+                    hi--;
+                }
+                else if(nums[lo] + nums[hi] > target){hi--;}
+                else{lo++;}
+            }
+            i++;
+        }
+        return ans;
+    }

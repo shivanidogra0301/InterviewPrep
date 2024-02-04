@@ -1,0 +1,50 @@
+Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+You must write an algorithm that runs in O(n) time and without using the division operation.
+
+ https://leetcode.com/problems/product-of-array-except-self/description/
+
+ Solution: 
+ 1.simple, if more than 1 zero, so every product will be 0
+ 2. if zero count is 1, then every non zero number product will be zero except where the zero
+ 3. simple product/nums[i]
+
+Example 1:
+
+Input: nums = [1,2,3,4]
+Output: [24,12,8,6]
+
+
+public int[] productExceptSelf(int[] nums) {
+        int product = 1;
+        int zero = 0;
+        int place = -1;
+
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] != 0){
+                product *= nums[i];
+            }
+            else{
+                zero++;
+                place = i;
+            }
+        }
+
+        int[] ans = new int[nums.length];
+
+        if(zero >= 2){
+            return ans;
+        }
+        else if(zero == 1){
+            ans[place] = product;
+            return ans;
+        }
+
+        for(int i = 0; i < nums.length; i++){
+            ans[i] = product/nums[i];
+        }
+
+        return ans;
+    }

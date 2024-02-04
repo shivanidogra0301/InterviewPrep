@@ -1,0 +1,27 @@
+Moore algorithm use krni hai, mtlb hr distinct value ko pair kr denge fir jo
+paring m bchenge vo pkke se majorityElement hi hoga, kyuki vo n/2 se zyada present hai
+and given hai ques m and available hoga.
+
+public int majorityElement(int[] nums) {
+        int val = nums[0];
+        int count = 1;
+        
+        for(int i = 1; i < nums.length; i++){
+            // same element hai to count+1
+            if(nums[i] == val){
+                count++;
+            }
+            else{
+                // meaning piche sbki pairing hogyi hai
+                if(count == 0){
+                    val = nums[i];
+                    count = 1;
+                }
+                // paring kra do
+                else{
+                    count--;
+                }
+            }
+        }
+        return val;
+    }

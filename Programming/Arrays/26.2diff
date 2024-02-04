@@ -1,0 +1,18 @@
+1. sort the array
+2. use 2 pointer approach, if diff is more meaning inc start++
+else end--
+
+public static boolean findPair(int arr[], int size, int n){
+        Arrays.sort(arr);
+        int i = 0, j = 0;
+        while(i < arr.length){
+        	int diff = arr[j] - arr[i];
+        	if(i != j && diff == n){
+        		System.out.println(arr[j] + " " + arr[i]); 
+        		return true;
+        	}
+        	else if(diff > n) i++;
+        	else j++;
+        }
+        return false;
+    }

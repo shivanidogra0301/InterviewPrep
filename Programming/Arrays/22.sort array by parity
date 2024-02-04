@@ -1,0 +1,27 @@
+https://leetcode.com/problems/sort-array-by-parity/description/
+ 0 to i-1 region m even rkhdo
+ then i to j-1 odd
+ and then j to nums.length will be unknown iterative.
+
+public int[] sortArrayByParity(int[] nums) {
+        int i = 0, j = 0;
+
+        while(j < nums.length){
+            if(nums[j] %2 == 0) {
+                swap(i, j, nums);
+                i++;
+                j++;
+            }
+            else{
+                j++;
+            }
+        }
+        return nums;
+    }
+
+    private void swap(int i, int j, int[] nums) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+

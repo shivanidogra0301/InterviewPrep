@@ -1,0 +1,39 @@
+// given subarray we need to find total subarray having maximum element in range L nd r
+
+1. iterate over array, check if that a[i] is in range, if present just add the length
+j-i+1 of subarray in ans and also store it in a variable
+
+2. if the new element in less than L, no worry pichle ans m vo add hoke koi impact
+nhi dalega ot prev ans ko plus krdenge
+
+3. agar > R, means usko hm subaraay m include ni kr skte to prevans = 0. and starting point
+bhi change ho jaega.
+
+https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/description/
+
+public int numSubarrayBoundedMax(int[] A, int L, int R) {
+        int ans = 0;
+        int i = 0;
+        int j = 0;
+        int prevans = 0;
+        while(j < A.length){
+            if(A[j] >= L && A[j] <= R){
+                ans += j-i+1;
+                prevans = j-i+1;
+                j++;
+            }
+            else if(A[j] < L){
+                
+                ans += prevans;
+                j++;
+            }
+            else if(A[j] > R){
+                
+                j++;
+                i = j;
+                prevans = 0;
+            }
+        }
+        
+        return ans;
+    }

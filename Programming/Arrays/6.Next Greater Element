@@ -1,0 +1,56 @@
+// 1234 ka  next greater element nikalna hai, simple series of steps
+
+1. if decreasing oreder present meaning no valid ans.
+2. otherwise check where arr[i] < arr[i+1] last se bacause just greater nikalna hai
+3. swap that place with number who is just greater that number from rest of places.
+4. to make ans minimum, after swapping reverse the rest of array.
+
+public int nextGreaterElement(int val) {
+        char[] arr = (""+val).toCharArray();
+        
+        int n = arr.length;
+        int place = -1;
+
+        for(int i = n-2; i >= 0; i--){
+            if(arr[i] < arr[i+1]) {
+                place = i;
+            }
+        }
+
+        if(place == -1){
+            return -1;
+        }
+
+        char ch = arr[place];
+        int si = place+1;
+
+        for(int i = si; i < n; i++){
+            if(arr[i] > ch && arr[i] < arr[si]){
+                si = i;
+            }
+        }
+
+        swap(arr, place, si);
+
+        int l = place+1;
+        int r = n-1;
+
+        while(l < r){
+            swap(arr, l ,r);
+            l++;
+            r--;
+        }
+
+        long ans = Long.parseLong(new String(arr));
+        
+        if(ans <= Integer.MAX_VALUE){
+            return (int)ans;
+        }
+        return -1;
+    }
+
+    public void swap(char[] arr, int i, int j){
+        char temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }

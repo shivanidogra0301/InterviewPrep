@@ -1,0 +1,21 @@
+https://leetcode.com/problems/max-chunks-to-make-sorted/description/
+
+given array ki values will be of 0 to arraysize so hm index se mapping kr skte hai
+, jo bhi chunk aise hua jaha ki max value array ke index k brabr hai meaning hm sort kr
+skte hai.
+
+ public int maxChunksToSorted(int[] arr) {
+        int ans = 0;
+        int max = Integer.MIN_VALUE;
+        
+        for(int i = 0; i < arr.length; i++){
+            max = Math.max(arr[i], max);
+            
+            if(i == max){
+                ans++;
+            }
+        }
+        
+        return ans;
+        
+    }

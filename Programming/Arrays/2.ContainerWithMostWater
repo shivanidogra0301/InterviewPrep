@@ -1,0 +1,22 @@
+https://leetcode.com/problems/container-with-most-water/description/
+
+given height of array, check the conatiner having most water
+Sol:  just use two pointer, usme jo minimum utna water vo hold kr paega, to usko baki
+kis se compare krne ki zrurat hi ni hai.
+
+public int maxArea(int[] height) {
+        int max = 0;
+        int left = 0;
+        int right = height.length-1;
+        
+        while(left < right){
+            max = Math.max(max,(Math.min(height[left],height[right]) * (right-left)));
+            if(height[left] < height[right]){
+                left++;
+            }
+            else{
+                right--;
+            }
+        }
+        return max;
+    }
