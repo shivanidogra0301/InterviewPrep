@@ -1,0 +1,55 @@
+/*
+ * make single node to double ll, then have similar conditiions
+ */
+ 
+ Node bTreeToClist(Node root)
+    {
+        //your code here
+        Node tail = flatt(root);
+        return tail.right;
+    }
+     public Node flatt(Node root){
+        if(root == null){ 
+            return null;
+        }
+        
+        Node lefttail = flatt(root.left);
+        Node righttail = flatt(root.right);
+        
+    
+        if(lefttail != null && righttail != null){
+            root.left = root;
+            root.right = root;
+            Node t1 = add(lefttail,root);
+            Node t2 = add(t1,righttail);
+            return t2;
+        }
+         if(lefttail != null){
+            root.left = root;
+            root.right = root;
+            Node tail = add(lefttail,root);
+            return tail;
+        }
+         if(righttail != null){
+            root.left = root;
+            root.right = root;
+            Node tail = add(root,righttail);
+            return tail;
+        }
+        
+        // if both are null, then tail vo khud hi hoga
+        root.left = root;
+        root.right = root;
+        return root;
+            
+        
+}
+    public Node add(Node t1, Node t2){
+        Node h1 = t1.right;
+        Node h2 = t2.right;
+        t1.right = h2;
+        h2.left = t1;
+        t2.right = h1;
+        h1.left = t2;
+        return t2;
+    }

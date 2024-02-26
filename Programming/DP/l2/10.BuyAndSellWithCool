@@ -1,0 +1,19 @@
+public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int bsp = -prices[0];
+        int ssp = 0;
+        int csp = 0; //coold down selling price
+        for(int i = 1; i < n; i++){
+           int nbsp = Math.max(bsp, csp - prices[i]);
+           int nssp = Math.max(ssp, bsp + prices[i]);
+
+           // ek stage purana ssp rkh rhe hai and buy krte vqt isko dekh rhe
+           //so automatically 1 din ka cool down lg rha
+           int ncsp = Math.max(csp, ssp);
+
+           bsp = nbsp;
+           ssp = nssp;
+           csp = ncsp;
+        }
+        return Math.max(bsp, Math.max(ssp, csp));
+    }

@@ -1,0 +1,52 @@
+https://leetcode.com/problems/maximum-sum-of-two-non-overlapping-subarrays/description/
+
+Non overlapping arrays for given 2 lengths, also L1 subarray can be after l2 length
+solution
+because we have fix the length it can we done using sliding window where we
+can all posibilties in o(n)
+1. make prefix array ith position Max sum of l length upto i;
+2. make suffix array ith position Max sum of l length from i to n;
+3. make window of size m, and compare at every i, window of M + Max(prefix[i-m], suffix[M+1])
+
+basicall do sliding window 3 times first to calculate pre, suff and ans.
+ public int maxSumTwoNoOverlap(int[] A, int L, int M) {
+        int[] prefix = new int[A.length];
+        Arrays.fill(prefix,Integer.MIN_VALUE);
+        int window = 0;
+        for(int i = 0; i < L; i++){
+            window += A[i];
+        }
+        prefix[L - 1] = window;
+        for(int i = L; i < A.length; i++){
+            window = window - A[i - L ] + A[i];
+            prefix[i] = Math.max(prefix[i-1],window);
+        }
+        window = 0;
+        for(int i = A.length - 1; i >= A.length - L; i--){
+            window += A[i];
+        }
+        int[] suffix = new int[A.length];
+        Arrays.fill(suffix,Integer.MIN_VALUE);
+        suffix[A.length - L] = window;
+        
+        for(int i = A.length - L - 1 ; i >= 0; i--){
+            window = window - A[i+L] +A[i];
+            suffix[i] = Math.max(suffix[i+1],window);
+        }
+        
+        window = 0;
+        for(int i = 0; i < M; i++){
+            window += A[i];
+        }
+        int omax = window + suffix[M];
+        
+        
+        for(int i = M; i < A.length; i++){
+            int leftmax = (i-M)>=0?prefix[i-M]:0;
+            int rightmax = (i+1)< A.length?suffix[i+1]:0;
+            window =window  - A[i-M]+A[i];
+            omax = Math.max(omax,window+Math.max(leftmax,rightmax));
+        }
+        return omax;
+        
+    }

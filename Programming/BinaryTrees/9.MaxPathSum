@@ -1,0 +1,21 @@
+int max ;
+    public int maxPathSum(TreeNode root) {
+        max = Integer.MIN_VALUE;
+        int temp = maxSum(root);
+        return max;
+    }
+    
+    public int maxSum(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        
+        int lpath = maxSum(root.left); //linear left
+        int rpath = maxSum(root.right); //linear right
+        int maxchildpath = Math.max(lpath,rpath) + root.val;
+        int curvedpath = root.val + lpath + rpath;
+        int finalMaxpath = Math.max(maxchildpath,curvedpath);
+        max = Math.max(max,Math.max(root.val,finalMaxpath));
+        
+        return Math.max(maxchildpath,root.val);
+    }

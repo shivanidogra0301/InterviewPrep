@@ -1,0 +1,16 @@
+use the structure.
+
+public static TreeNode construct(int n) {
+		if (n == 0) {
+			return null;
+		}
+		TreeNode left = construct(n / 2);
+
+		//inorder
+		TreeNode root = new TreeNode(temp.val);
+		temp = temp.next;
+		
+		root.left = left;
+		root.right = construct(n - n / 2 - 1);
+		return root;
+	}

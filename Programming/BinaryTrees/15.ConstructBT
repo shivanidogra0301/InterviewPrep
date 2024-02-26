@@ -1,0 +1,116 @@
+pre and inorder
+PRE= Node Left right
+Inorder = Left Node right
+so first Node in pre is root, search that in inorder, in inorder, everything left from
+root is left subtree, and right from root is right subtree.
+
+ public TreeNode buildTree(int[] pre, int[] in) {
+    	return construct(pre, 0, pre.length - 1, in, 0, in.length - 1);
+    }
+
+    public static TreeNode construct(int[] pre, int ps, int pe, int[] in, int is, int ie){
+    	if(ps > pe || is > ie){
+    		return null;
+    	}
+
+    	int idx = -1;
+    	TreeNode n = new TreeNode(pre[ps]);
+
+        //logn -> O(1) using hashmap
+    	for(int i = is; i <= ie; i++){
+    		if(in[i] == pre[ps]){
+    			idx = i;
+    			break;
+    		}
+    	}
+    	int cnt = idx - is;
+
+    	n.left = construct(pre, ps + 1, ps + cnt, in, is, idx - 1);
+    	n.right = construct(pre, ps + cnt + 1, pe, in, idx + 1, ie);
+
+    	return n;
+    }
+
+Post and inorder
+  public TreeNode buildTree(int[] post, int[] in) {
+    	return construct(post, 0, post.length - 1, in, 0, in.length - 1);
+    }
+
+    public static TreeNode construct(int[] post, int ps, int pe, int[] in, int is, int ie){
+    	if(ps > pe || is > ie){
+    		return null;
+    	}
+
+    	int idx = -1;
+    	TreeNode n = new TreeNode(post[pe]);
+    	for(int i = is; i <= ie; i++){
+    		if(in[i] == post[pe]){
+    			idx = i;
+    			break;
+    		}
+    	}
+    	int cnt = idx - is;
+
+    	n.left = construct(post, ps, ps + cnt - 1, in, is, idx - 1);
+    	n.right = construct(post, ps + cnt, pe - 1, in, idx + 1, ie);
+
+    	return n;
+    }
+
+level Order and Inorder
+We won't get continuous elements, so will try to create a new array
+
+static HashMap<Integer, Integer> map;
+	static Node buildTree(int in[], int level[]) {
+		map = new HashMap<>();
+		for (int i = 0; i < in.length; i++) {
+			map.put(in[i], i);
+		}
+		return constructTree(level, 0, in.length - 1);
+	}
+
+//	is =>  inorder start , ie => inorder end, l => level order
+	public static Node constructTree(int[] l, int is, int ie) {
+		if(l.length == 0){
+			return null;
+		}
+
+		if(is == ie){
+			return new Node(l[0]);
+		}
+
+		Node n = new Node(l[0]);
+		int idx = map.get(l[0]);
+
+		int[] l_left = new int[idx - is];
+		int[] l_right = new int[ie - idx];
+		int li = 0, ri = 0;
+
+		for (int i = 0; i < l.length; i++) {
+			if (map.get(l[i]) < idx) {
+				l_left[li++] = l[i];
+			}
+			else if(map.get(l[i]) > idx) {
+				l_right[ri++] = l[i];
+			}
+		}
+		n.left = constructTree(l_left, is, idx - 1);
+		n.right = constructTree(l_right, idx + 1, ie);
+		return n;
+	}
+
+	public static void main(String[] args) {
+		int[] lo = {0, 1, 2};
+		int[] in = {1, 0, 2};
+		buildTree(in, lo);
+	}
+
+// pre and post order
+isme hm agar full binary tree given ho tabhi unique bna skte hai nhi to ans nikalna
+possible nhi hai, kyuki manlo left subtree exist nhi krta, sir right h so there's
+no way by which we can identify it in post, that it is part of left subtree.
+because m dono node se phle aate hai.
+
+pre, post
+pre[0]  = root, then find  pre[0+1] in post, that is starting of left subtree
+so in psot o to idx is left, anx idx+1 to end-1 is right. do that

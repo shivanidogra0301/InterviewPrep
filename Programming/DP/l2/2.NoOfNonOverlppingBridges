@@ -1,0 +1,45 @@
+So here we are given north and south cordingates of bridge, we want total non overlapping bridges
+so , we will sort the bridge on basis of north cordinate, and check the longest inc subarray,
+
+so overall both n and s are in increasing order which they will never be overlapping as
+condition for non overlapping bridges is arr[i].n < arr[i+1]. n && arr[i].s < arr[i+1].s
+
+
+public static class Bridge implements Comparable<Bridge>{
+        int north;
+        int south;
+
+        public Bridge(int n , int s){
+            this.north = n;
+            this.south = s;
+        }
+
+        public int compareTo(Bridge o){
+            if(this.north != o.north){
+            return this.north - o.north;
+            }
+            else{
+                return this.south - o.south;
+            }
+        }
+     }
+
+        Arrays.sort(arr);
+        int omax = 0;
+        int[] dp = new int[n];
+        for(int i = 0; i < dp.length; i++){
+            int max = 0;
+            for(int j = 0; j < i; j++){
+                if(arr[j].south < arr[i].south){
+                    if(dp[j] > max){
+                        max = dp[j];
+                    }
+                }
+            }
+            dp[i] = 1 + max;
+            if(dp[i] > omax){
+                omax = dp[i];
+            }
+        } 
+        System.out.println(omax);
+    

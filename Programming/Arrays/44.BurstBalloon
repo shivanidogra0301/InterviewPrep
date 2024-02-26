@@ -1,0 +1,28 @@
+given balloons position in x axis, and we are throwing arrow from vertical direction
+minimum balloons, 
+solution if it is overlapping, then we don't need extra baloon. but don't merge it
+also sort on the basis of endtime
+
+public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, (a,b) ->  a[1] - b[1]);
+        int ans = 1;
+        int ps = points[0][0];
+        int pe = points[0][1];
+
+        System.out.println(points[0][0]);
+        for(int i = 1; i < points.length; i++){
+            int cs = points[i][0];
+            int ce = points[i][1];
+            System.out.println(cs+" "+ce+" "+ps+" "+pe);
+            if(cs <= pe){
+                System.out.println("@@");
+                continue;
+            }
+            
+                ans++;
+                ps = cs;
+                pe = ce;
+            
+        }
+        return ans;
+    }

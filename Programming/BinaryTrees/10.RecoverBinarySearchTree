@@ -1,0 +1,35 @@
+inourder traversal of BST should be sorted, if not, then check for 2 values which
+needs to be swapped.
+
+TreeNode prev;
+    TreeNode ans1;
+    TreeNode ans2;
+    public void recoverTree(TreeNode root) {
+        prev = new TreeNode(Integer.MIN_VALUE);
+        ans1 = null;
+        ans2 = null;
+        findSwappedNodes(root);
+        
+        int temp = ans1.val;
+        ans1.val = ans2.val;
+        ans2.val = temp;
+    }
+    
+    public  void findSwappedNodes(TreeNode root){
+        if(root == null){
+            return;
+        }
+        findSwappedNodes(root.left);
+        if(ans1 == null && prev.val > root.val){
+            ans1 = prev;
+            ans2 = root;
+        }
+        else if( prev.val > root.val){
+            ans2 = root;
+            return;
+        }
+        
+        prev = root;
+        
+        findSwappedNodes(root.right);
+    }

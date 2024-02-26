@@ -1,0 +1,42 @@
+if hme 5 din m 4 transact m max profit nikaln hai
+
+hm check krege ki 4din 4transaction, vo ek condidate hai
+2. MAx(3din 3tr, 2 din 3 trn, 1 din 3 tran) + 4th trans hmari hogi uss i day 
+which will be arr[4] - arr[3,2,1].
+
+for this hm dp bnaenge where row is tran, colu is days
+
+now 2 candidate mhm pichli row m loop lgake check kreng koi ek ans
+to prevent that what we will do , hm max lenge mtlb
+jb hm 4days m 2 tran nikal rhe the to hmare max
+m  (3days 1 tran - uss din stcok ki value) pdi hogi
+
+similar, 4days m 3 tran nikal rhe honge
+to max = 3days1 tran - us din stock ki valye, 3 days 2 trans - us din stock ki value)
+pdi hogi, to hme ek extra loop ki zrurt ni pdegi
+
+
+public int maxProfit(int k, int[] arr) {
+        int[][] dp = new int[k+1][arr.length];
+        
+        for(int t = 1; t <= k; t++) {
+            // this max prevent extra loop
+            int max = Integer.MIN_VALUE;
+            for(int d = 1; d < dp[0].length; d++){
+                //update max
+                if(dp[t-1][d-1] - arr[d-1] > max) {
+                    max = dp[t-1][d-1]-arr[d-1];
+                }
+                same trran day less
+                dp[t][d] = dp[t][d-1];
+
+                less tran les day+ ek extra trans
+                if(max + arr[d] > dp[t][d]){
+                    dp[t][d] = max + arr[d];
+                }
+
+            }
+        }
+
+        return dp[k][arr.length-1];
+    }

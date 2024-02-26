@@ -1,0 +1,71 @@
+ given a box, h,l,w,, find total box we can stack on one another making sure the top
+ should have less less base then bottom one, we can change the base of any box by rolling
+
+
+ ans is when making coordinates, include all 3 base that can be make and put it in array
+ then sort the array on basis of one parameter and calculate lis on other.
+ https://www.geeksforgeeks.org/problems/box-stacking/1
+
+
+ 
+ static class Pair implements Comparable<Pair>{
+        int h;
+        int w;
+        int l;
+        
+        Pair(int h, int w, int l){
+            this.h = h;
+            this.w = w;
+            this.l = l;
+        }
+        
+        public int compareTo(Pair o){
+            if(this.w != o.w){
+                return o.w - this.w;
+            }
+            return this.l - o.l;
+        }
+   }
+    public static int maxHeight(int[] height, int[] width, int[] length, int n)
+    {   
+        int tr = height.length * 3;
+        Pair[] arr = new Pair[tr];
+        int j = 0;
+        for(int i = 0; i < height.length; i++){
+            int h = height[i];
+            int w = width[i];
+            int l = length[i];
+            
+            arr[j++] = new Pair(h,Math.min(w,l),Math.max(w,l));
+            arr[j++] = new Pair(w,Math.min(h,l),Math.max(h,l));
+            arr[j++] = new Pair(l,Math.min(w,h),Math.max(w,h));
+            
+            
+            
+            
+        }
+        Arrays.sort(arr);
+        // for(int i = 0; i < tr; i++){
+        //     System.out.println(arr[i].h +" "+arr[i].w+ " "+arr[i].l);
+        // }
+        int omax = 0;
+        int[] dp = new int[tr];
+        for(int i = 0; i < tr; i++){
+            int max = 0;
+            
+            for( j = i-1; j >= 0; j--){
+                if(arr[j].l > arr[i].l && dp[j] > max){
+                    max = dp[j];
+                }
+            }
+            dp[i] = max + arr[i].h;
+            if(dp[i] > omax){
+                omax = dp[i];
+            }
+        }
+        // for(int i = 0; i < tr; i++){
+        //     System.out.println(dp[i]);
+        // }
+        return omax;
+        
+    }

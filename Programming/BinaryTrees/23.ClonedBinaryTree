@@ -1,0 +1,53 @@
+public Tree cloneTree(Tree tree){
+       addExtraNodeLeft(tree);
+       addRandomPointers(tree);
+       return extractTree(tree);
+     }
+     
+    public void addExtraNodeLeft(Tree node){
+         if(node == null){
+             return ;
+         }
+         
+        Tree newNode = new Tree(node.data);
+        Tree curleftNode = node.left;
+        node.left = newNode;
+        newNode.left = curleftNode;
+        
+        addExtraNodeLeft(node.left.left);
+        addExtraNodeLeft(node.right);
+    }
+    
+    public void addRandomPointers(Tree node){
+        if(node == null) {
+            return ;
+        }
+        
+        if(node.random != null){
+           node.left.random = node.random.left; 
+        }
+        
+        addRandomPointers(node.left.left);
+        addRandomPointers(node.right);
+        
+    }
+    
+    public Tree extractTree(Tree node){
+        if(node == null) {
+            return null;
+        }
+
+        Tree l = extractTree(node.left.left);
+        Tree r = extractTree(node.right);
+        
+        Tree newNode = node.left;
+        
+        node.left = node.left.left;
+
+        newNode.left = l;
+        newNode.right = r;
+        
+        return newNode;
+
+        
+    }

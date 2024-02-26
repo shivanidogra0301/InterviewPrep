@@ -1,0 +1,76 @@
+https://leetcode.com/problems/longest-increasing-subsequence/
+
+if we can to actually print he lis and the seq mater in the answer then use N^2
+approach, otherwise you can use nlogn approach but we cannot print the seq in thi approach
+
+Solution: at every dp[i] we are storing total no of lis which will ending in arr[i]
+
+meainf if array is 10 22 3 then at dp[1], we are total lis which we surely end at 22,
+so when generating new one just check if it can append in any of prev values, 
+then take max of their length and append only in that ss to make lis.
+
+ int omax = 0;
+        for (int i = 0; i < dp.length; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    if (dp[j] > max) {
+                        max = dp[j];
+                    }
+                }
+            }
+
+            dp[i] = 1 + max;
+            if (dp[i] > omax) {
+                omax = dp[i];
+            }
+        }
+        System.out.println(omax);
+
+
+2. Approach so lis is longest inc ss, which means it will be sorted.
+so we can use binary search to found the lenght of it. So at every point we are checking
+if the last added number in seq <  current val, if yes we can just append our number
+, to create one length longer lis.
+
+if last added num in sq > current val, so we surely cannot append it in last as
+it will not be sorter, what we will do will replace it with just gratet seq present in
+seq, so now the ans is exactly same, but we have increased the range of the subsequence,
+
+eg arr = [2, 5, 3, 4];
+*el = 2 => seq = [2]
+*el = 5 => 5 > seq[n - 1] seq = [2,5]
+*el => 3 =>  3 not greater than seq[n - 1] so find the immediate next that is 5 and replace it seq = [2, 3]
+*el => 4 => 4 > seq[n - 1] seq => [2, 3, 4]
+
+so basically when some short number comes we are replacing it so it wont change the ans
+
+public static int lis(int[] arr) {
+        List<Integer> seq = new ArrayList<>();
+        seq.add(arr[0]);
+        for(int i = 1; i < arr.length; i++){
+
+            //increase length by one
+            if(arr[i] > seq.get(seq.size() - 1)){
+                seq.add(arr[i]);
+            }
+
+            //replace the immediate big to increase the range of lis
+            else{
+                int lo = 0;
+                int hi = seq.size() - 1;
+
+                while(lo < hi){
+                    int mid = lo + (hi - lo) / 2;
+                    if(seq.get(mid) >= arr[i]){
+                        hi = mid;
+                    }
+                    else{
+                        lo = mid + 1;
+                    }
+                }
+                seq.set(lo, arr[i]);
+            }
+        }
+        return seq.size();
+    }

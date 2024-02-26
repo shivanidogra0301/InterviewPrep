@@ -1,0 +1,69 @@
+left  view - level order, first element to be added
+right view - level order, last element to be added
+
+top view
+iterate level order, add vertical level as well
+like for root its 0, for its left child it's -1, right child = +1
+
+now also for same vertical level only add first one, now to print ans
+correcty, mantain the range min max, and iterate over hashmap
+//Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    static class Pair{
+        Node node;
+        int vl;
+        
+        Pair(Node node, int vl){
+            this.node = node;
+            this.vl = vl;
+            
+        }
+    }
+    static ArrayList<Integer> topView(Node root)
+    {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        Queue<Pair> q = new LinkedList<>();
+        
+        q.add(new Pair(root,0));
+        
+        while(q.size() > 0){
+            int size = q.size();
+            
+            while(size-- > 0){
+            Pair rem = q.remove();
+            
+            min = Math.min(min,rem.vl);
+            max = Math.max(max,rem.vl);
+            
+            if(!map.containsKey(rem.vl)){
+                map.put(rem.vl,rem.node.data);
+            }
+            
+            if(rem.node.left != null){
+                q.add(new Pair(rem.node.left,rem.vl-1));
+            }
+            
+            if(rem.node.right != null){
+                q.add(new Pair(rem.node.right,rem.vl+1));
+            }
+            
+            }
+            
+        }
+        
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for(int i = min; i <= max; i++){
+            list.add(map.get(i));
+        }
+        
+        return list;
+        
+    }
+
+
+bottom view
+same above question just remove adding in hashmap condition check
+always add the node value so that last one will be there after traversal

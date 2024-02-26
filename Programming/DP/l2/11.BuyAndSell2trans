@@ -1,0 +1,33 @@
+first calculate at i, agr aaj sell kre to max profit kitna hoga, agar vo ab ek max se 
+bda h to use that otherwise lp[i-1]
+
+then calculate agr aaj buy kre to max profit kitna hoga, or vo oberall s bda then update
+
+then sum of lp[i],rp[i] will be the ans
+
+
+public int maxProfit(int[] arr) {
+        int n = arr.length;
+        int[] lp = new int[n];
+        int[] rp = new int[n];
+        int lsf = arr[0];
+        for(int i = 1; i < n; i++){
+            lsf = Math.min(lsf, arr[i]);
+            int profit = arr[i] - lsf;
+            lp[i] = Math.max(lp[i-1], profit);
+        }
+        int msf = arr[n-1];
+        for(int i = n-2; i >= 0; i--){
+            msf = Math.max(msf, arr[i]);
+            int profit = msf - arr[i];
+            rp[i] = Math.max(rp[i+1], profit);
+        }
+
+        int ans = 0;
+
+        for(int i = 0; i < n; i++){
+            ans = Math.max(lp[i]+rp[i], ans);
+        }
+
+        return ans;
+    }

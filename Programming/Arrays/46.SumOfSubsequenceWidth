@@ -1,0 +1,29 @@
+https://leetcode.com/problems/sum-of-subsequence-widths/
+
+total subsequence = 2"n
+total subsequecne if you fixed on nuber 2^n-1
+
+now in array 1 2 3
+
+1 will act as large element total subsequence = 2^i
+1 will act as minimum element for 2^2 i.e remaining elements
+
+
+public int sumSubseqWidths(int[] nums) {
+        Arrays.sort(nums);
+        int a = (int)1e9 + 7;
+        int n = nums.length;
+        long ans = 0;
+        // calculate power of 2
+        long[] pow = new long[n];
+        pow[0] = 1;
+        for (int i = 1; i < n; i++) {
+            pow[i] = pow[i - 1] * 2 % a;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            ans = (ans + (pow[i] - pow[n - i - 1]) * nums[i]) % a;
+        }
+
+        return (int)ans;
+    }

@@ -1,0 +1,17 @@
+public int maxProfit(int[] arr, int fee) {
+        int bp = -arr[0];
+        int sp = 0;
+
+        for(int i = 1; i < arr.length; i++){
+            // purane sell pe aaj buy krenge to
+            int nbp = sp - arr[i];
+
+            // purane buy pe aaj sell krenge and fee bhi krenge
+            int nsp = bp+arr[i]-fee;
+
+            bp = Math.max(bp,nbp);
+            sp = Math.max(sp, nsp);
+        }
+
+        return Math.max(bp,sp);
+    }

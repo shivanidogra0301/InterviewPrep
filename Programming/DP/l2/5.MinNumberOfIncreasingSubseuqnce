@@ -1,0 +1,21 @@
+https://www.geeksforgeeks.org/minimum-number-of-increasing-subsequences/
+
+find total incr subsequence in an array.
+sime find the length of longest deccreasing subarray as all alements in that array
+while make a new increasing subsequecne, so we will have the count of starting point
+of every increasing subarray.
+
+highway billboard problem
+
+https://www.geeksforgeeks.org/highway-billboard-problem/
+
+simple application of lis, so hr board ki position pe jake dekhneng vo piche kisme
+jud skta hai, or unme se jiska max revenue hai usko add krdenge current revenue if nott
+then only current revenue.
+o(n^2) o(n)
+
+now other solution, what if we create a array of size maxmiles+1.
+
+now jahan board ni hai, vha simple dp[i] = dp[i-1]
+if board exist we have 2 choice, inc?  dp[i] = dp[i-t-1] + rev[i]
+exc dp[i] =dp[i-1]

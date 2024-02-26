@@ -1,0 +1,36 @@
+https://leetcode.com/problems/trapping-rain-water/description/
+
+diffrence between this and containser with most water is usme hme 2 block choose krke btana
+tha max kitn pani store kr skte hai, isme hme choose nhi krna just total stored
+water calculate krna hai
+solution:
+1. 2 pointer approach, but here on any block hm kitna paani hold kr skte hai vo depend krega
+left max value kya and right m max value kya hai, un dono m jo min hoga - height of current
+utna hi hm uss block k upr store kr skte hai so just that.
+
+
+public int trap(int[] height) {
+        if(height.length == 0){
+            return 0;
+        }
+        // two pointer
+        int i =0; 
+        int j = height.length-1;
+        // max height upto i
+        int prefixmax = height[i];
+        int suffixmax = height[j];
+        int water = 0;
+        while(i < j){
+            if(prefixmax <= suffixmax){
+                water +=  prefixmax - height[i];
+                i++;
+                prefixmax = Math.max(prefixmax,height[i]);
+            }
+            else{
+                water +=  suffixmax - height[j];
+                j--;
+                suffixmax = Math.max(suffixmax,height[j]);
+            }
+        }
+        return water;
+    }

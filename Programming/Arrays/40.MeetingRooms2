@@ -1,0 +1,28 @@
+exactly same a no of platforms question
+
+public static int canAttendMeetings(List<Interval> intervals) {
+		if(intervals == null || intervals.size() == 0) return 0;
+		ArrayList<Integer> start = new ArrayList<>();
+		ArrayList<Integer> end = new ArrayList<>();
+		for(Interval i : intervals){
+			start.add(i.start);
+			end.add(i.end);
+		}
+		Collections.sort(start);
+		Collections.sort(end);
+		int i = 0, j = 0;
+		int cnt = 0;
+		int total = 0;
+		while(i < intervals.size()){
+			if(start.get(i) <= end.get(j)){
+				cnt++;
+				i++;
+			}
+			else{
+				cnt--;
+				j++;
+			}
+			total = Math.max(total, cnt);
+		}
+		return total;
+	}

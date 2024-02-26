@@ -1,0 +1,32 @@
+https://leetcode.com/problems/consecutive-numbers-sum/description/
+
+Given an integer n, return the number of ways you can write n as the sum of consecutive positive integers.
+Example 1:
+
+Input: n = 5
+Output: 2
+Explanation: 5 = 2 + 3
+
+Consecutive series sum = 1+2+3--n = n(n+1)/2
+so for 15, the ans is 4 i.e 4 ways we have
+but that 4 ways might have different length.
+
+so for solution, we need to find what maximum length can be, let's say k is max length
+x + x + 1 + x + 2 ------x + (k-1) = N
+kx+ k(k-1)/2 = N, alse N > 0 because positive number sum
+kx + k(k-1)/2 > 0 => x = N-k(k-1)/2/k => N-k(k-1)/2 > 0 => k(k-1) > 2N 
+i.e that's upper limit, k^2 ? 2N
+
+now the valid ans, x should be integer N-k(k-1)/2 divide by k == 0
+
+
+public int consecutiveNumbersSum(int N) {
+        
+        int count = 0;
+        for(int k = 1; k* k < 2 * N; k++){
+            if((N - (k*(k-1))/2) %k == 0){
+                count++;
+            }
+        }
+        return count;
+    }

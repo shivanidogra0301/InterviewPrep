@@ -1,0 +1,34 @@
+-1 no cameras
+0 menas camera
+1 no camera but covered
+
+int count;
+    public int minCameraCover(TreeNode root) {
+        count = 0;
+        int state = countCameras(root);
+
+        if(state == -1){
+            count++;
+        }
+        return count;           
+    }
+
+    public int countCameras(TreeNode root) {
+        if(root == null) {
+            return 1;
+        }
+
+        int lc = countCameras(root.left);
+        int rc = countCameras(root.right);
+
+        if(lc == -1 || rc == -1) {
+            count++;
+            return 0;
+        }
+
+        if ( lc == 0 || rc == 0){
+            return 1;
+        }
+
+        return -1;
+    }

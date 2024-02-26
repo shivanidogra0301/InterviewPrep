@@ -1,0 +1,40 @@
+public static void printLeftBoundary(Node root){
+		if(root == null) return;
+		if(root.left != null){
+			System.out.print(root.data +  " ");
+			printLeftBoundary(root.left);
+		}
+		else if(root.right != null){
+			System.out.print(root.data + " ");
+			printLeftBoundary(root.right);
+		}
+	}
+
+	public static void printRightBoundary(Node root){
+		if(root == null) return;
+		if(root.right != null){
+			printRightBoundary(root.right);
+			System.out.print(root.data +  " ");
+		}
+		else if(root.left != null){
+			printRightBoundary(root.left);
+			System.out.print(root.data + " ");
+		}
+	}
+
+	public static void printLeaf(Node root){
+		if(root == null) return;
+		if(root.left == null && root.right == null){
+			System.out.print(root.data + " ");
+		}
+		printLeaf(root.left);
+		printLeaf(root.right);
+	}
+
+	//anticlockwise
+	public static void boundaryTraversal(Node root) {
+		System.out.print(root.data + " ");
+		printLeftBoundary(root.left);
+		printLeaf(root);
+		printRightBoundary(root.right);
+	}

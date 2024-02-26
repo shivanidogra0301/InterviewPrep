@@ -1,0 +1,40 @@
+
+/*
+flat tree to linkedlist, simple agar m ye man k chle ki left subtree is changed
+then right subtree is list.
+
+root.right m left ki tail dali, left ki tail ko rightsubtree m point kia, return
+rihttail.
+
+*/
+public void flatten(TreeNode root) {
+        TreeNode tail = flatt(root);
+        
+    }
+    public TreeNode flatt(TreeNode root){
+        if(root == null){
+            return null;
+        }
+        TreeNode lefttail = flatt(root.left);
+        TreeNode righttail = flatt(root.right);
+        
+    
+        if(root.left != null && root.right != null){
+            TreeNode rightsubtree = root.right;
+            root.right = root.left;
+            root.left = null;
+            lefttail.right = rightsubtree;
+            return righttail;
+        }
+         if(root.left != null){
+            root.right = root.left;
+            root.left = null;
+            return lefttail;
+        }
+         if(root.right != null){
+                return righttail;
+        }
+        return root;
+            
+        
+}
