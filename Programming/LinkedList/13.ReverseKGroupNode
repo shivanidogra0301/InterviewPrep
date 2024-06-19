@@ -1,0 +1,98 @@
+
+
+
+static ListNode th;
+    static ListNode tt;
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || head.next == null || k<= 1) return head;
+        ListNode oh = null;
+        ListNode ot = null;
+        ListNode cur = head;
+        ListNode forw = null;
+        int len = length(head);
+        
+        // reverse krne k bad remaining list ki length atleast k honi chaiye
+       while(len >= k){
+           int tk = k;
+           th = null;
+           tt = null;
+           while(tk-- > 0){
+               //backup
+               forw = cur.next;
+               
+               //links changed
+               cur.next = null;
+                   
+                // add this node to thead   
+               addFirst(cur);
+               
+               cur = forw;
+           }
+           len -= k;
+           // adding reverse list of k length to the last of overall list
+           if( oh == null){
+               oh = th;
+               ot = tt;
+           }
+           else{
+               ot.next = th;
+               ot = tt;
+           }
+           
+       }
+        //if there is some node present in list whose len is less than k
+        ot.next = cur;
+        
+        return oh;
+    }
+
+
+Another to reverse list
+     public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode cur = head;
+        ListNode frw = head;
+        ListNode nhead = null;
+        ListNode ntail = null;
+        while(cur != null){
+            //backup
+            frw = cur.next;
+            
+            //adfirst
+            if(ntail == null){
+                ntail = cur;
+            }
+            cur.next = nhead;
+            nhead = cur;
+                
+            //move forward
+            cur = frw;
+        }
+        return nhead;
+    }
+   
+    
+    public static int length(ListNode head){
+        int len = 0;
+        ListNode cur = head;
+        while(cur!= null){
+            len++;
+            cur = cur.next;
+        }
+        
+        return len;
+    }
+    
+    public void addFirst(ListNode node){
+        if(th == null){
+            th = tt = node;
+            return;
+        }
+        
+        node.next = th;
+        th = node;
+    }
+    
+    

@@ -1,0 +1,17 @@
+make 2 dummy node, oddHead, evenHead
+oddCur, evenCur
+
+while(cur != null) {
+    if(cur.val %2 == 0 {
+        evenCur.next = cur;
+        evenCur = evenCur.next;
+    }
+    else{
+        oddCur.next = cur;
+        oddCur = oddCur.next;
+    }
+    cur = cur.next;
+}
+evenCur.next = oddHead;
+oddHead.next = null;
+return  evenHead.next;

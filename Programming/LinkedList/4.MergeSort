@@ -1,0 +1,44 @@
+  
+  
+  
+public LinkedList merge2SortedLL(Node h1, Node h2) {
+        LinkedList l = new LinkedList();
+
+        // iterate and add
+        while(h1 != null && h2 != null) {
+            if(h1.val < h2.val){
+                l.addLast(h1);
+                h1 = h1.next;
+            }
+            else {
+                l.addLast(h2);
+                h2 = h2.next;
+            }
+        }
+
+        while(h1 != null){
+            l.addLast(h1);
+            h1 = h1.next;
+        }
+
+        while(h2 != null){
+            l.addLast(h2);
+            h2 = h2.next;
+        }
+        return l;
+    }
+
+
+public LinkedList mergeSort(Node head, Node tail) {
+        if(head == tail) {
+            LinkedList br = new LinkedList();
+            br.addLast(tail);
+            return br;
+        }
+
+        Node mid = mid2(head, tail);
+        LinkedList s1 = mergeSort(head, mid);
+        LinkedList s2 = mergeSort(mid.next, tail);
+
+        return merge2SortedLL(s1.head, s2.head);
+    }

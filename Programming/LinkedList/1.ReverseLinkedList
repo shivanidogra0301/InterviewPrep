@@ -1,0 +1,45 @@
+// in linkedlist, we can easily have next pointers but to go back is difficult
+
+
+Reverse By data using iterative approach, time complexiity o(n^2)
+
+// li ri get Node and reverse data
+    public void ReverseByData() {
+        int li = 0;
+        int ri = size-1;
+
+        while(li < ri) {
+            Node left = getAt(li);
+            Node right = getAt(ri);
+
+            int temp = left.val;
+            left.val = right.val;
+            right.val = temp;
+            li++;
+            ri--;
+        }
+    }
+
+
+ // li ri get Node and reverse data
+    public Node ReverseByPointer(Node head) {
+
+        // always write this to avoid null pointer exception
+        if(head == null || head.next == null) return head;
+
+        Node prev = null;
+        Node cur = head;
+        
+        while(cur != null) {
+            // backups
+            Node next = cur.next;
+
+            //link
+            cur.next = prev;
+            
+            //forward
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }

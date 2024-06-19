@@ -1,0 +1,36 @@
+a-b-c-d-e-f-g normal list
+a-g-b-f-c-e-d - fold list
+we want to unfold it back to original list
+simple take 4 pointers, fh, fp = first head first prev
+sh, sp = second head, second prev
+
+Now we know second pointer will go to null first, so condition 1= sp!=null
+but in even case, it will give null pointer
+
+public static void Unfold(Node head) {
+    if(head == null || head.next == null){
+        return head;
+    }
+
+    Node fh = head;
+    Node fp = fh;
+    Node sh = head.next;
+    Node sp = sh;
+
+    while(sp != null && sp.next != null) {
+        // backup
+        Node forw = sp.next;
+
+        //links
+        fp.next = forw;
+        sp.next = forw.next;
+
+        // move
+        fp = fp.next;
+        sp = sp.next;
+    }
+    fp.next = null;
+    Node sh = reverse(sh);
+    fp.next = sh;
+    return fh;
+}

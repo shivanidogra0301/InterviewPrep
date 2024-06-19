@@ -1,8 +1,11 @@
-So here we are given north and south cordingates of bridge, we want total non overlapping bridges
-so , we will sort the bridge on basis of north cordinate, and check the longest inc subarray,
+So here we are given north and south cordinates of bridge, 
+we want total non overlapping bridges
+so , we will sort the bridge on basis of north cordinate, 
+and check the longest inc subarray,
 
 so overall both n and s are in increasing order which they will never be overlapping as
-condition for non overlapping bridges is arr[i].n < arr[i+1]. n && arr[i].s < arr[i+1].s
+condition for non overlapping bridges is 
+arr[i].n < arr[i+1]. n && arr[i].s < arr[i+1].s
 
 
 public static class Bridge implements Comparable<Bridge>{

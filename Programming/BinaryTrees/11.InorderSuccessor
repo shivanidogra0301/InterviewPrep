@@ -1,6 +1,6 @@
 O(n) iterate over bst, in onrder if that value > p, it is the answer
 
-o(logn), find the element using binary search, then just check rightmost ka leftmost is the
+o(logn), find the element using binary search, then just check right ka leftmost is the
 answer but jb bhi left m ja rhe honge to parent ko ans m dalte rhe
 
 

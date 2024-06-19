@@ -1,6 +1,6 @@
 given a matrix print a matrix having moves of knights, such that
-each vertex is vis once and we pisit all the cells using knights move.
+each vertex is vis once and we visit all the cells using knights move.
 
 solution:
 8 directions call dfs, for vis use cell[r][c] = move, now if move = row*col means all
-cells are visited. this is our solution. and don't foget o remove change when backtracking
+cells are visited. this is our solution. and don't forget to remove change when backtracking

@@ -1,6 +1,6 @@
 https://leetcode.com/problems/bus-routes/description/
 
-hr bus k routes given hai, hme btanna hai minimu kitni bus leke target tk ja skte hai.
+hr bus k routes given hai, hme btanna hai minimum kitni bus leke target tk ja skte hai.
 Now bus routes se ek graph bn jaega, usme puche minimu kitne edge se target tk phochna hai
 to normal BFS lg jata simple ans ho jata. But yha catch ye hai ki same bus route m
 sbka ans 1 rhega, kyuki total bus puchi hai 

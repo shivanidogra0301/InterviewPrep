@@ -1,0 +1,38 @@
+public Node copyRandomList(Node head) {
+      if(head == null){
+          return null;
+      }
+       addCopyofEveryNode(head);
+       addRandomPointer(head);
+       Node nh = head.next;
+       RemoveClonedList(head);
+       return nh;
+    }
+    public static void addCopyofEveryNode(Node head){
+        Node curr = head;
+        while(curr!= null){
+            Node node = new Node(curr.val);
+            node.next = curr.next;
+            curr.next = node;
+            curr = curr.next.next;
+        }
+    }
+    public static void addRandomPointer(Node head){
+        Node curr = head;
+        while(curr != null){
+            if(curr.random != null)
+                curr.next.random = curr.random.next;
+            curr = curr.next.next;
+        }
+    }
+    public static void RemoveClonedList(Node head){
+        Node curr = head;
+        Node forw = head.next;
+        while(forw!= null){
+            curr.next = forw.next;
+            curr = forw;
+            forw = forw.next;
+        }
+    }
+   
+    

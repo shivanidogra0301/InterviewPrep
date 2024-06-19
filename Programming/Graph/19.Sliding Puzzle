@@ -1,6 +1,6 @@
 https://leetcode.com/problems/sliding-puzzle/description/
 Fixed 2x3 array given or hme use 123450 is form m lana hai minimum no of swaps krke
-Also swap hm sirf 0 ko kr skte hai with ita 4 nbrs only. We want to find minimum swaps
+Also swap hm sirf 0 ko kr skte hai with its 4 nbrs only. We want to find minimum swaps
 
 1. Greedy nhi lgega hr combination check but minimum krna to aise check krenge
 first ans hi best ans ho that we can acheive by bfs.

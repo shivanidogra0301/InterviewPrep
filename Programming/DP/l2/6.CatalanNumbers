@@ -22,7 +22,7 @@ same code applications
 2. given n pair of upstock / and downstock \, count total number of mountains and vallyes made
 for n = 0  ans = 1
 for n = 1    /\ = 1
-n = 2    ans = 1 
+n = 2    ans = 2
 meaning /\ iske andr ek pair use, ya iske bahar
  / \     
 /   \   / \/\
@@ -34,7 +34,7 @@ n = 3
 /     \   / \ /  \   /    \  /\    /\/\/\   /       \
 
 3. Combination of balanced parenthesis
-4. given circle and chords, find total no of non intersecting chors(cn/2)
+4. given circle and chords, find total no of non intersecting chords(cn/2)
 5. given no of side of polygon, how many triangle you can cut (cn-2)
-n=2, c0 = 1
+n=3, c0 = 1
 https://cp-algorithms.com/combinatorics/catalan-numbers.html

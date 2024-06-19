@@ -16,8 +16,8 @@ other case top se edge nhi hai, then vo element top pe aa hi ni skta.
 // calculate stack
 static int count;
 	public static void dfs(ArrayList<ArrayList<Integer>> g, int src,
-	 int[] visisted, ArrayList<Integer> st){
-		visisted[src] = 1;
+	 int[] visited, ArrayList<Integer> st){
+		visited[src] = 1;
 		for(int nbr : g.get(src)){
 			if(visisted[nbr] == 0){
 				dfs(g, nbr,visisted, st);
@@ -31,7 +31,7 @@ static int count;
 		visisted[src] = 1;
 		count++;
 		for(int nbr : g.get(src)){
-			if(visisted[nbr] == 0){
+			if(visited[nbr] == 0){
 				checkVertex(g, nbr,visisted);
 			}
 		}

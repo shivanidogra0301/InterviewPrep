@@ -1,0 +1,33 @@
+Iterative way to add 2 linkedlist
+
+1. reverse both linkedlist so you don't have problem to move backwards
+2. we will add reverse of 2 ll
+3. return ans in reverse
+
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1 == null || l2 == null){
+            return (l1 == null) ? l2 : l1;
+        }
+        ListNode c1 = reverse(l1);
+        ListNode c2 = reverse(l2);
+        int carry = 0;
+        ListNode dummy = new ListNode(-1);
+        ListNode ans = dummy;
+
+        while(c1 != null || c2 != null || carry != 0) {
+            int d1 = (c1 != null) ? c1.val : 0;
+            int d2 = (c2 != null) ? c2.val : 0;
+
+            int sum = d1 + d2 + carry;
+            int dig = sum % 10;
+            carry = sum/10;
+
+            ans.next = new ListNode(dig);
+            ans = ans.next;
+            
+            c1 = (c1 != null) ? c1.next : null;
+            c2 = (c2 != null) ? c2.next : null;
+
+        }
+        return reverse(dummy.next);
+    }

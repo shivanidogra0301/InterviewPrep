@@ -1,0 +1,57 @@
+https://leetcode.com/problems/top-k-frequent-elements/description/
+
+Given an integer array nums and an integer k, return the k most frequent elements.
+ You may return the answer in any order.
+
+1. make hashmap having freq of each array value.
+2. you can sort the value but it will inc the tc onlogn
+3. We can use bucket sort instead, where bucket[i] store all th values
+having freq i.
+4. then we iterate from right, and put the ans in ans array. 
+ you can use sorting of HashMap values, 
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+
+
+public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for(int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
+        }
+
+        ArrayList<Integer>[] bucket = new ArrayList[nums.length + 1];
+
+        for(int i: map.keySet()){
+            int cnt = map.get(i);
+
+            if(bucket[cnt] != null){
+                bucket[cnt].add(i);
+            }
+            else{
+                ArrayList<Integer> temp = new ArrayList<>();
+                temp.add(i);
+                bucket[cnt] = temp;
+            }
+        }
+
+        int[] ans = new int[k];
+        int p = 0;
+
+        for(int i = bucket.length-1; i >=0 && p < k; i--) {
+            if(bucket[i] != null) {
+                for(int j = 0; j < bucket[i].size() & p < k; j++) {
+                    ans[p] = bucket[i].get(j);
+                    p++;
+                }
+            }
+            
+        }
+
+        return ans;
+    }

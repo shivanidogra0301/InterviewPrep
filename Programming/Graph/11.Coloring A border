@@ -7,15 +7,19 @@ The border of a connected component is all the squares in the connected componen
 You should color the border of the connected component that contains the square grid[row][col] with color.
 Return the final grid.
 
-// hme color krna hai ek connected component ko dusre color m. connected component ki conditions de rkhi hai
-i.e 4 dired and have same color. So simple uss condition k kiye connected components vala dfs lgana hai.
-Now main catch is, we only want to color those who are in border. mtlb jinke adjacent m 4 direction se km main
-vo color hoga, to simple hai 4 directions ka color check krke count nikal lenge, if count is !=4
+// hme color krna hai ek connected component ko dusre color m. connected component ki conditions
+ de rkhi hai i.e 4 dired and have same color. So simple uss condition k liye
+connected components vala dfs lgana hai.
+Now main catch is, we only want to color those who are in border. 
+mtlb jinke adjacent m 4 direction se km main
+vo color hoga, to simple hai 4 directions ka color 
+check krke count nikal lenge, if count is !=4
 meaning it;s in border so color it.
 
 
-Agar hme, extra space use ni krna hai, to vis ki jgah hm matrix m -ve curcolr kro and vistied mark kro fir last
-m check kro agar count == 4 hai meaning vo non boundary hai to uski real value se replace krdo otherwise
+Agar hme, extra space use ni krna hai, to vis ki jgah hm matrix m -ve curcolr kro and
+vistied mark kro fir last m check kro agar count == 4 hai meaning vo 
+non boundary hai to uski real value se replace krdo otherwise
 nested loop chlake -ve value ko new color m change krdo
 
 public int[][] colorBorder(int[][] grid, int r0, int c0, int color) {
@@ -49,7 +53,7 @@ public int[][] colorBorder(int[][] grid, int r0, int c0, int color) {
                     
             }
         }
-        // non border elements
+        // border elements
         if(count != 4){
             grid[r][c] = color;
         }

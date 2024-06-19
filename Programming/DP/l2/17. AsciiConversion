@@ -1,0 +1,52 @@
+Given two strings s1 and s2, return the lowest ASCII sum of deleted characters to make two strings equal.
+
+ 
+
+Example 1:
+
+Input: s1 = "sea", s2 = "eat"
+Output: 231
+Explanation: Deleting "s" from "sea" adds the ASCII value of "s" (115) to the sum.
+Deleting "t" from "eat" adds 116 to the sum.
+At the end, both strings are equal, and 115 + 116 = 231 is the minimum sum possible to achieve this.
+
+
+dp[i][j] will store min cost to convert s[i,n] into s[j ,n]
+
+so if c1 == c2, so cost to convert rest of string will be in dp[i+1]dp[j+1]
+else delete(c1) + cost[of i+1 s1][j ton] meanind dp[i+1][j]
+or delete c2 = delete(c2) + dp[i][j+1]
+
+
+public int minimumDeleteSum(String s1, String s2) {
+        int[][] dp = new int[s1.length()+1][s2.length()+1];
+		
+		for(int i = dp.length - 1; i >= 0; i--){
+		    for(int j = dp[0].length-1; j >= 0; j--){
+		        if((i== dp.length - 1) && (j == dp[0].length - 1)){
+		            dp[i][j] = 0;
+		        }
+		        else if(i == dp.length-1){
+		            dp[i][j] = dp[i][j+1] + (int)s2.charAt(j);
+		        }
+		        else if(j == dp[0].length-1){
+		            dp[i][j] = dp[i+1][j] + (int)s1.charAt(i);
+		        }
+		        else{
+		            char c1 = s1.charAt(i);
+		            char c2 = s2.charAt(j);
+		            
+		            if(c1 == c2){
+		                dp[i][j] = dp[i+1][j+1];
+		            }
+		            else{
+		                int c1r = (int)c1+ dp[i+1][j];
+		                int c2r = (int)c2 + dp[i][j+1];
+		                dp[i][j] = Math.min(c1r,c2r);
+		            }
+		        }
+		    }
+		}
+
+		return dp[0][0];
+    }

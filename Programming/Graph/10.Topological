@@ -20,8 +20,9 @@ public  void print(ArrayList<Edge>[] graph , int src, boolean[] visited, Stack s
         st.push(src); 
     }
 
-Note: topological sort do not work for graphs having cycle or undirected becuase in that we will not
-be able to know which node is independent as every node will have dependancy.
+Note: topological sort do not work for graphs having cycle or undirected becuase in that
+we will not be able to know which node is independent as every 
+node will have dependancy.
 
 Now we can also calculate topological sort using iteration, that algo is called
 Kahn's algorithm, which do not use recursion. But key point of using this instead of
@@ -71,7 +72,7 @@ int[] indeg = new int[v];
 				}
 			}
 		}
-        // add vtcs is added
+        // all vtcs is added
 		if(idx == v){
 			print(ans);
 		}

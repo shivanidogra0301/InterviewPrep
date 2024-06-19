@@ -1,0 +1,74 @@
+1. By recursion
+Type: In postorder of recursion, we have two pointers one at the last and  one at the
+starting and we can iterate from last to second last using stack trace,so making
+it easier for the linkedlist to move both left and right at the same time
+
+1. Fold a ll 
+1-2-3-4-5-6 = 1-6-2-5-3-4
+
+same approach can be used for pallindromic list
+
+Node fleft;
+
+public void foldHelper(Node right, int floor) {
+    if(right == null){
+        return;
+    }
+    foldHelper(right.next, floor+1);
+    //post order meaning rightnow we have first and last pointers
+    if(floor > size/2) {
+        //backup
+        Node next = fleft.next;
+        //link
+        fleft.next = right;
+        right.next = next;
+
+        // forward
+        fleft = next;
+
+    }
+    else if(floor == size/2) {
+            tail = right;
+            tail.next = null;
+    }
+}
+public void fold() {
+    fleft = head;
+    foldHelper(head, 0);
+}
+
+// iterative solution o(n)
+
+Iterative solution for folding a linkedlist
+
+public static void fold(Node head) {
+    if(head == null || head.next == null) {
+        return head;
+    }
+
+    Node mid = mid(head);
+    Node nhead = mid.next;
+    mid.next = null;
+
+    nhead = reverseByPointer(nhead);
+    
+    Node c1 = head;
+    Node c2 = nhead;
+    Node f1 = head;
+    Node f2 = nhead;
+
+
+    while(c2 != null) {
+        // backups
+        f1 = c1.next;
+        f2 = c2.next;
+
+        //links updation
+        c1.next = c2;
+        c2.next = f1;
+
+        //move
+        c1 = f1;
+        c2 = f2;
+    }
+}

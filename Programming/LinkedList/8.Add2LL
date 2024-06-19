@@ -1,0 +1,36 @@
+
+// Add two linkedlist
+1. 1-2-3-4 and other 5-6, if their place value is same, then add them and return carry
+otherwise the number having more place value will be added with only carry.
+
+LinkedList res;
+// we ar returing carry in recursion
+public int addTwoLLHeper(Node h1, int pv1, Node h2, int pv2, LinkedList res) {
+    if(h1 == null && h2 == null) {
+        return 0;
+    }
+    int data = 0;
+    if(pv1 > pv2) {
+        int carry = addTwoLLHeper(h1.next, pv1-1, h2, pv2, res);
+        data = carry + h1.data;
+    }
+    else if(pv1 < pv2) {
+        int carry = addTwoLLHeper(h1, pv1, h2.next, pv2-1, res);
+        data = carry + h2.data;
+    }
+    else{
+        int carry = addTwoLLHeper(h1.next, pv1-1, h2.next, pv2-1, res);
+        data = carry + h2.data + h1.data;
+    }
+
+    int nval = data % 10;
+    int ncar = data/10;
+    res.addFirst(nval);
+    return ncar;
+}
+
+public LinkedList add2LL(LinkedList l1, LinkedList l2) {
+    int carry = addTwoLLHeper(l1.head, l1.size, l2.head, l2.size, new LinkedList);
+    res.addFirst(carry);
+    return res;
+}

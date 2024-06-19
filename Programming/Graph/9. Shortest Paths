@@ -9,7 +9,7 @@ DFS time complexity also = o[V+E] because we covering every edge and vertixe who
  Shortest path in terms of weights . Do not work for negative weights.
  Single source shortest path
  solution Dijkstra O ( V + E l o g V ) . = O(E+v) * O(logV) iterative every vertex+ priority queue search complexity
-= O(e+logV)
+= O((V + e)logV)
 
  Dijkstra Algorithm
  Everything is same as BFS but instead of using queue we will use priority queue

@@ -1,5 +1,5 @@
 agar hm ek graph ko 2 sets of vertices m divide kar ske such that
-edge shpuld be across sets not in between and all vertices should be present in that sets
+edge should be across sets not in between and all vertices should be present in that sets
 
 Solution: acyclice graph is always bipartite
         even length cyclic graph is also bipartite

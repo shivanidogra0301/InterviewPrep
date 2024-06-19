@@ -1,6 +1,6 @@
 
 remove mark* work add*
-BFS is also a graph iteration but here we fist visit all nbrs then go deep , in comparison
+BFS is also a graph iteration but here we first visit all nbrs then go deep , in comparison
 it is like level order traversel of binary tree.
 We use queue, we add all the nbrs first in queue, then start removing from first
 one by one it is call bfs.

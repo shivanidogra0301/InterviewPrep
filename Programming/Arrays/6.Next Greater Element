@@ -1,5 +1,5 @@
 // 1234 ka  next greater element nikalna hai, simple series of steps
-
+12548532
 1. if decreasing oreder present meaning no valid ans.
 2. otherwise check where arr[i] < arr[i+1] last se bacause just greater nikalna hai
 3. swap that place with number who is just greater that number from rest of places.

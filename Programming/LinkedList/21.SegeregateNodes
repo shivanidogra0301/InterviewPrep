@@ -1,0 +1,17 @@
+1. Segeragate 01
+// isme apne ko 2 pointers rkhne hai, just like odd even just make sure to avoid cycles
+after completing the loop, pz.next = po.next; po.next = null; you have to make it null
+otherwise it will reuslt in cycle.
+
+2. Segeragte 012, take 3 pointers and do the same work
+after that , po.next = pt.next;  this condition should always be first
+pz.next = po.next;
+pt.next = null;
+as for cas 2-2-2 , if we swap those line, pz will point to null
+
+3. Segeragate smaller and larger. Agar hme aise pointer bnane hai jisme
+use date se chhoti value uske phle rhe(any order) and uss data se badi value uske bad rhe
+we have to make sure ki vo data apni list m apne chhoti value m last m rhe
+mtlb lets say we wnt 2 find correct pos for 3, 1-2-10-6-7-3-11 if yo use
+segregate here, it will work fine, but if 1-3-2-2-10 it will give wrong answer as after 3,
+we have 2 more smaller values.

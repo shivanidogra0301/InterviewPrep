@@ -1,7 +1,7 @@
 Application of topologial sort.
-Hme pta hai agar, a -> b ek edge present means top sort m "b" ko "a" se phle aana hoga. Now hme kuch words diye hai
+Hme pta hai agar, a -> b ek edge present means top sort m "a" ko "b" se phle aana hoga. Now hme kuch words diye hai
 uska sort order btana hai simple hai, agar wrt wet dia hai to mtln r ki priority e se zyada hai to hme ans main
-r -> e edge bna denge now top sort m  it will be print like "er" which is asc order sort lexicographically
+r -> e edge bna denge now top sort m  it will be print like "re" which is asc order sort lexicographically
 
 And kyuki hme btana hai ki correct ans milega ya nhi to hm kahn algo use krenge agar cycle present hui means
 sorting is not possible will return -1.

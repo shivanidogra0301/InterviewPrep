@@ -12,7 +12,7 @@ public int reachNumber(int target) {
             i++;
             sum += i;
             
-            if(sum == target || ((sum > target) &&(target - sum)%2 == 0)){
+            if(sum == target || ((sum > target) && (target - sum)%2 == 0)){
                 break;
             }
            

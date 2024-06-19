@@ -11,7 +11,7 @@ righ the code in such a way, thawe can calculate the level.
 will keep a count of orages that turned into rotten to know the answer
 
 
-keyPoint, hme agar multiple source m level se and nikalna ho to 2 ways pair class main
+keyPoint, hme agar multiple source m level se ans nikalna ho to 2 ways pair class main
 ek level rkhlo, and usko prev level+1 kro ya fir level order m chlake level count krlo
 both are same
 

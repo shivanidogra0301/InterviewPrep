@@ -58,7 +58,7 @@ public static void print(ArrayList<Edge>[] graph , int src , int des , boolean[]
         }
         //backtrack
         visited[src] = false;
-        return false;
+        return;
         
     }
 
@@ -73,7 +73,7 @@ boolean[] visited = new boolean[vtces];
         Stack<Integer> st = new Stack<>();
         st.push(src);
 
-        while (!queue.isEmpty()) {
+        while (!st.isEmpty()) {
             Pair p = st.pop();
 
             if (visited[p.v]) { // if we come here that means graph has a cycle

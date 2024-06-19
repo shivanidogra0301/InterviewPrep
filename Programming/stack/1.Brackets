@@ -1,0 +1,65 @@
+Problem1. "(a + b) + ((c + d))" given the equation, check if the equation has duplicate
+brackets, like here ((c+d)) have double brackets
+
+Solution: put everything in stack when you find ')', pop until '(' comes, if nothing is
+present while popping, meaning duplicates are present.
+
+ Stack<Character> s = new Stack<>();
+        for(int i = 0; i < s2.length(); i++){
+            char c = s2.charAt(i);
+
+            if(c == ')'){
+                // nothing present in between, count the duplicates
+                if(s.peek() == '('){
+                    duplicate = true;
+                    cnt++;
+                    s.pop();
+                }
+                else{
+                    while(s.peek() != '('){
+                        s.pop();
+                    }
+                    // removing  '(' as well
+                    s.pop();
+                }
+            }
+            else{
+                s.push(c);
+            }
+
+        }
+
+
+Problem 2; check if every '(' opening bracket have closing ')' of same type.
+
+    public static void main(String[] args){
+        String s = "[[]]({}";
+        HashMap<Character ,Character> m = new HashMap<>();
+
+        // to map opening bracket to corresponding close bracket.
+        Stack<Character> st = new Stack<>();
+        m.put(')','(');
+        m.put('}','{');
+        m.put(']','[');
+
+       for(int i = 0; i < s.length(); i++){
+           char c = s.charAt(i);
+
+           if(m.containsKey(c)){
+               char top = st.size() > 0 ? st.peek() : '#';
+               // check correct closing bracket is present
+               if(top == m.get(c)){
+                   st.pop();
+               }
+               else{
+                   // wrong bracket is present.
+                   System.out.println("False");
+                    return;
+               }
+           }
+           else{
+            // opening brackets
+               st.push(c);
+           }
+       }
+       System.out.println(st.size() == 0);

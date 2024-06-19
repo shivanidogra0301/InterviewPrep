@@ -1,0 +1,51 @@
+1. just like segragating odd even, we ue iter and point it to the next diffrent value
+
+
+public Node removeDuplication(Node head) {
+    if(head == null || head.next == null){
+        return head;
+    }
+    Node dummy = new Node(-1);
+    Node itr = dummy;
+    Node cur = head;
+
+    while(cur != null) {
+        while(cur != null && cur.val == itr.val){
+            cur = cur.next;
+        }
+        itr.next = cur;
+        itr = itr.next;
+        if(cur != null) cur = cur.next;
+    }
+    return dummy.next;
+}
+
+// if you want remove all the duplicates and not want it even once
+meaninf 1-1-2-3 = 1-2-3
+for that 1. make a potential ans, the check if loop runs even once cur.val == itr.next.val
+that means it is duplicate so dur itr = cur, making next element the potential
+otherwise itr = itr.next;
+
+public Node removeDuplication(Node head) {
+    if(head == null || head.next == null){
+        return head;
+    }
+    Node dummy = new Node(-1);
+    Node itr = dummy;
+    itr.next = head; // potential unique node
+    Node cur = head.next;
+
+    while(cur != null) {
+        boolean islooprun = false;
+        while(cur != null && cur.val == itr.next.val){
+            islooprun = true;
+            cur = cur.next;
+        }
+        if(islooprun)
+            itr.next = cur;
+        else 
+            itr = itr.next;
+        if(cur != null) cur = cur.next;
+    }
+    return dummy.next;
+}

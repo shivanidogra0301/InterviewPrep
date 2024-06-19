@@ -26,7 +26,6 @@ https://leetcode.com/problems/shortest-bridge/
         int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
         
         while(q.size() > 0){
-            
             int size = q.size();
             while(size-- > 0){
                 Pair rem = q.remove();
@@ -35,7 +34,7 @@ https://leetcode.com/problems/shortest-bridge/
                     int cdash = rem.j + dir[i][1];
                     
                     // negative cases
-                    if(rdash < 0 || cdash < 0 || rdash >= grid.length|| cdash >=                                                grid[0].length){
+                    if(rdash < 0 || cdash < 0 || rdash >= grid.length|| cdash >= grid[0].length){
                         continue;
                     }
 
@@ -47,21 +46,19 @@ https://leetcode.com/problems/shortest-bridge/
                         // this means we got 2nd component nbr since it is bfs so first and is minimum ans
                         return count;
                     }
-            
                 }
-                
             }
             count++;
-            
         }
-        return -1;
-        
+        return -1;  
     }
+
     public static void change(int[][] grid){
         for(int i = 0; i < grid.length; i++){
            for(int j =0; j < grid[0].length; j++){
                 if(grid[i][j] == 1){
                     dfs(grid,i,j);
+                    // meaning only one component value is updated
                     return;
                 }
             }

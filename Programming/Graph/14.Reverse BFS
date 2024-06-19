@@ -5,7 +5,7 @@ given 01 matrix, we want to find distance from 1 to closest 0 available.
 Now if we think direct, hme hr 1 se clossest 0 find krna hai, kyuki closest krna hai to ye
 to pkka hai bfs use hoga. to hm hr 1 se bfs chla skte h, and calculate kr skte hai ki
 jese hi closest 0 aaye, answer daldo. 
-but time complexity here wold be o(v) * o(v+E).
+but time complexity here would be o(v) * o(v+E).
 
 But if we think otherwise, ki hm multiple source bfs lgaye , yani hr 0 ko queue m dalde
 or vo apne closest 1 ka distance calculate krde. to ye problem o(v+E) m solve ho jaegi

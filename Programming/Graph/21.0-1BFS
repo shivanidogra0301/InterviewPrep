@@ -1,9 +1,9 @@
 Agar hme aise graph m minimum cost fromsrc to dest nikalna ho jaha sirf 2 wts hai
 0 and 1, then don't necessarily need PriorityQueue because we can itself add the
-wts in such a way it exectued in soerting order this is called 0-1BFS
+wts in such a way it executed in sorting order this is called 0-1BFS
 
 how do we do that? simple we will add the edges having 0 wt in front and 
-edges having 1 wt at the end becuase algorithmically 0 wts edges needs to be
+edges having 1 wt at the end because algorithmically 0 wts edges needs to be
 used first.
 
 So, 
@@ -13,6 +13,7 @@ min cost btani for one valid path, so what will do for edge we will make an oppo
 edge whose cost will be 1 then we use 0-1 bfs to find the shortest path tha will
 be our cost.
 
+should be in same order of direction indexes in ques
 static int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
  public int minCost(int[][] grid) {
         int n = grid.length;
@@ -34,7 +35,7 @@ static int[][] dir = {{0,1},{0,-1},{1,0},{-1,0}};
                 if(newx < 0 || newx >= n || newy < 0 || newy >= m || visited[newx][newy] == true){
                     continue;
                 }
-                // in grid we have given directions left mean 1 like that so if there
+                // in grid we have given directions right mean 1 like that so if there
                 exist an edge
                 if(grid[rem.x][rem.y] == i+1){
                     q.addFirst(new Pair(newx,newy,rem.cost+0));

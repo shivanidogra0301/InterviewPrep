@@ -1,7 +1,7 @@
 NLR
 phle, root plus 1 pe gye, uska rightmost nikalte hai, then root m point krte hai
- then check kra, agar root.right ==null hai, mtlb first time visit hua, so and add
- otherwise root.right=null, then root ka left part solve hogya hai, ko go to right
+then check kra, agar root.right ==null hai, mtlb first time visit hua, so and add
+otherwise root.right=null, then root ka left part solve hogya hai, ko go to right
  
 public List<Integer> preorderTraversal(TreeNode root) {
 	List<Integer> ans = new ArrayList<>();

@@ -1,5 +1,24 @@
 https://leetcode.com/problems/insert-interval/description/
 
+You are given an array of non-overlapping intervals intervals where 
+intervals[i] = [starti, endi] represent the start and the end of the ith interval 
+and intervals is sorted in ascending order by starti. You are also given an 
+interval newInterval = [start, end] that represents the start and end of another interval.
+
+Insert newInterval into intervals such that intervals is still 
+sorted in ascending order by starti and intervals still does not have any 
+overlapping intervals (merge overlapping intervals if necessary).
+
+Return intervals after the insertion.
+
+ 
+
+Example 1:
+
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
+
+
 we have at add new interval then if merging possible do that and be done returnn
 new ArrayList
 
@@ -7,15 +26,15 @@ simple, find correct position for new interval, if ending > ns meaning interval 
 to phle aaega, to hmne pich k sb daldiye, then check kia ki merging to ni hori
 
 
-so remaing array m check kia, agar uska s < ne meaning merhing create new pair
+so remaining array m check kia, agar uska s < ne meaning merhing create new pair
 do that until a pair is made
 
-if mergin happend add the new pair, then add rest of array
+if merging happend add the new pair, then add rest of array
 
 public int[][] insert(int[][] intervals, int[] newInterval) {
-        // if(intervals.length == 0){
-        //     return new int[][]{newInterval};
-        // }
+    // if(intervals.length == 0){
+    //     return new int[][]{newInterval};
+    // }
         ArrayList<int[]> ans = new ArrayList<>();
         int i = 0; 
         int gs = newInterval[0];
@@ -63,5 +82,4 @@ public int[][] insert(int[][] intervals, int[] newInterval) {
             i++;
         }
         return ans.toArray(new int[ans.size()][2]);
-        
-    }
+}

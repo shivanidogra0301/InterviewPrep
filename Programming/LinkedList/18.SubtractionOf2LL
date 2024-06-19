@@ -1,0 +1,131 @@
+  public int size(Node head) {
+        int size = 0;
+        
+        while(head != null ){
+            size++;
+            head = head.next;
+        }
+        return size;
+    }
+    
+    public Node subLinkedList(Node head1, Node head2) {
+        
+        while(head1 != null && head1.data == 0) {
+            head1 = head1.next;
+        }
+        
+        while(head2 != null && head2.data == 0) {
+            head2 = head2.next;
+        }
+        
+        int n1 = size(head1);
+        int n2 = size(head2);
+        
+        if(n1 == 0 && n2 == 0){
+            return new Node(0);
+        }
+        
+        // if(n1 == 0 || n2 == 0) {
+        //     return n1 == 0 ? head2: head1;
+        // }
+        
+        Node bl = null;
+        Node sl = null;
+        
+        Node l1 = head1;
+        Node l2 = head2;
+        
+        
+        
+        if(n2 > n1){
+            bl = head2;
+            sl = head1;
+        }
+        else if(n1 > n2) {
+            bl = head1;
+            sl = head2;
+        }
+        else{
+            l1 = head1;
+            l2 = head2;
+            while(l1.data == l2.data) {
+                l1 = l1.next;
+                l2 = l2.next;
+                
+                if(l1 == null){
+                    return new Node(0);
+                }
+            }
+            
+            if(l1.data > l2.data){
+                bl = head1;
+                sl = head2;
+            }
+            else{
+                bl = head2;
+                sl = head1;
+            }
+            
+        }
+        
+        bl = reverse(bl);
+        // System.out.print(size(bl));
+        sl = reverse(sl);
+        int b = 0;
+        Node bi = bl;
+        Node si = sl;
+        Node dummy = new Node(-1);
+        Node ans = dummy;
+        
+        
+        while(bi != null) {
+            int d1 = bi.data;
+            int d2 = (si != null) ? si.data: 0;
+            int dif = d1 - d2 + b;
+            
+            
+            if(dif < 0){
+                dif += 10;
+                b = -1;
+            }
+            else{
+                b = 0;
+            }
+            
+            ans.next = new Node(dif);
+            ans = ans.next;
+            bi = bi.next;
+            si = (si != null) ? si.next : null;
+        }
+        ans = reverse(dummy.next);
+        
+        while(ans != null && ans.next != null && ans.data == 0){
+            ans = ans.next;
+        }
+        
+        // System.out.println("@@@@@@@@@");
+        // System.out.println(size(ans));
+        return ans;
+        
+        
+    }
+    
+    public Node reverse(Node head) {
+        if(head == null || head.next == null ){
+            return head;
+        }
+        
+        Node cur = head;
+        Node prev = null;
+        
+        while(cur != null) {
+            Node forw = cur.next;
+            
+            cur.next = prev;
+            
+            prev = cur;
+            cur = forw;
+        }
+        
+        return prev;
+    }

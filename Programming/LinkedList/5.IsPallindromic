@@ -1,0 +1,35 @@
+/* if we want to check if the linkedlist is pallindromic using iterative sol in o(n)
+
+    1. find mid node.
+    2. detach mid.next to separate linkedlist
+    3. reverse the second half
+    4. compare the values if not eqal it is not pallindrome
+    5. make the linkedlist same again
+
+    */
+
+    public boolean isPallindromic(Node head){
+        if(head == null || head.next == null) return true;
+
+        Node mid = mid2(head, null);
+        Node nlist = mid.next;
+        mid.next = null;
+        nlist = ReverseByPointer(nlist);
+
+        Node n1 = head;
+        Node n2 = nlist;
+        boolean res = true;
+        // in even case both list will be end together
+        // in odd case, n2 is short in size, so we can use n2 for loop condition
+        while(n2 != null) {
+            if(n1.val != n2.val){
+                res = false;
+                break;
+            }
+        }
+        // making list normal
+        nlist = ReverseByPointer(nlist);
+        mid.next = nlist;
+
+        return res;
+    }

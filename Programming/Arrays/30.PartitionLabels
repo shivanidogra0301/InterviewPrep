@@ -1,5 +1,5 @@
 https://leetcode.com/problems/partition-labels/description/
-Given a string, partition the string a much as you can but 'a' should be stored
+Given a string, partition the string a much as you can but each letter should be stored
 in same partition, 
 1. just store the latest occurence of every coming character.
 2. Now iterate the array, if current char last occurence > maxocurence update it.

@@ -1,8 +1,8 @@
 find operation o(1)
 union operation o(1)
-best used when graph is dynamic i.e we need to caclute ans after every edge
+best used when graph is dynamic i.e we need to calculate ans after every edge
 
-hmko 2 diffrent set ko union krna to bss ek set k leader ko dusre m point kr dete hai
+hmko 2 different set ko union krna to bss ek set k leader ko dusre m point kr dete hai
 why check rank? for complexity,. 
 agar dono ki rank same h to kisi m bhi daldo size + 1 hoga
 agr diff hai to km vale ko bde vale m merge krte hai as km vale ki +1 ho jati h but uss

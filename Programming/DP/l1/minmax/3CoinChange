@@ -1,0 +1,24 @@
+//combination nikalne hai meaning
+// if amount is 5, then 23 or 32 will be same
+
+// Now, we don't weant to repeat the seq, we will first calculate
+// ways using one coin, total coins required  if using only 
+// 1 rupee coin, then with 2, so we are iterating over coins
+// one by one and calculating the ans.
+
+public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount+1];
+        for(int i = 1; i < dp.length; i++){
+            dp[i] = -1;
+        }
+        for(int i = 0; i < coins.length; i++){
+            for(int j = 1; j < dp.length; j++){
+                int coin = coins[i];
+                int col = j - coin;
+                if(col >= 0){
+                    dp[j] = Math.min(dp[j], dp[col]+1);
+                }
+            }
+        }
+        return dp[amount];
+    }

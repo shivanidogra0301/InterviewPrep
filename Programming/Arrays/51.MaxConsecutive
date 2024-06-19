@@ -1,6 +1,6 @@
 // 110010 max one zero swap allowed find longest length
 
-count the length until zero count  = 1, if any time it excedd change j pointer
+count the length until zero count  = 1, if any time it excee d change j pointer
 to relase the first 0 and again repeate the process.
 for if count of zeros can be swapped is k, then change condition to count>k
  

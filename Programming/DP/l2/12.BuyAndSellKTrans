@@ -1,10 +1,10 @@
 if hme 5 din m 4 transact m max profit nikaln hai
 
 hm check krege ki 4din 4transaction, vo ek condidate hai
-2. MAx(3din 3tr, 2 din 3 trn, 1 din 3 tran) + 4th trans hmari hogi uss i day 
+2. MAx(4din 3tr, 3din 3tr, 2 din 3 trn, 1 din 3 tran) + 4th trans hmari hogi uss i day 
 which will be arr[4] - arr[3,2,1].
 
-for this hm dp bnaenge where row is tran, colu is days
+for this hm dp bnaenge where row is tran, column is days
 
 now 2 candidate mhm pichli row m loop lgake check kreng koi ek ans
 to prevent that what we will do , hm max lenge mtlb
@@ -40,3 +40,5 @@ public int maxProfit(int k, int[] arr) {
 
         return dp[k][arr.length-1];
     }
+
+https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns#DP-on-Strings

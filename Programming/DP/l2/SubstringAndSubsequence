@@ -9,7 +9,6 @@ _r1 x c2r2 ---2
 c1r1 x _r2 --- 3
 c1r1 x c2r2 --- 4
 
-
 if c1 == c2 , dp[i][j] = dp[i-1][j-1] + 1 
 because if answer is in 1, the max ans will surely in 4
 in 2,3 if exist, that also will be covered in 4th no need to check
@@ -120,4 +119,26 @@ else dp[i][j-1] + dp[i+1][j] - dp[i+1][j-1], e.f aac, then count(aa) + count(ac)
 
     System.out.println(dp[0][s.length() - 1]);
 
+explanantion: hmne string ko 4 parts m divide kia
+mid ss    x1
+c1 mid   x2
+mid c2   x3
+c1 mid c2  x4
+now if c1 == c2, and  x1 + x2 + x3 + x4 is ans
+but we know if c1=c2, meaning x4 = x1+1, all sub of middle and plus one with empty ss of case1
+maning if mid = ab, total pallindromic ss = 2, but total paaling in cabc will 3 a b cc 
 
+= x1+x2+x3+x1+1
+= ss(mid and ss starting with c1) + ss(mid ad ss ending withc2) + 1
+
+
+for other case when c1!=c2, x4 = 0
+c1 + c2 + c3 + c1 - c1
+ss(mid and ss starting with c1) + ss(mid ad ss ending withc2) - ss(mid)
+
+
+count distinct pallindromic subsqurenct
+for case c1!=c2, ans is same above
+c1=c2 , a----a = 2dps[mid] + 2
+a --a----a = 2dps[mid] + 1
+a--a--a--a = 2dps[mid] -dps[m']

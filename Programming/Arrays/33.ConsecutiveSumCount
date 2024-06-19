@@ -14,8 +14,8 @@ but that 4 ways might have different length.
 so for solution, we need to find what maximum length can be, let's say k is max length
 x + x + 1 + x + 2 ------x + (k-1) = N
 kx+ k(k-1)/2 = N, alse N > 0 because positive number sum
-kx + k(k-1)/2 > 0 => x = N-k(k-1)/2/k => N-k(k-1)/2 > 0 => k(k-1) > 2N 
-i.e that's upper limit, k^2 ? 2N
+kx + k(k-1)/2 > 0 => x = N-k(k-1)/2/k => N-k(k-1)/2 > 0 => k(k-1) < 2N 
+i.e that's upper limit, k^2 / 2N
 
 now the valid ans, x should be integer N-k(k-1)/2 divide by k == 0
 

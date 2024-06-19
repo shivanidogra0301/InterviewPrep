@@ -1,0 +1,94 @@
+class LRUCache {
+/**
+    Doubly lnkedlist to get prev node in O(1) . When we want to least node to
+    be always in the end and, most used node in starting. So when add a new node,
+    we will add it in starting, and when we want to remove the node we remove it from
+    last. When we get the node, we return the value and remove the node and add it in
+    . starting
+**/
+    // doubly linkedlist
+    class Node {
+        int key;
+        int value;
+        Node prev, next;
+        
+        Node(int key, int value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    HashMap<Integer, Node> cache;
+    int cap;
+    Node head,tail;
+
+    void addNode(Node node) {
+        Node nbr = head.next;
+
+        node.next = nbr;
+        node.prev = this.head;
+
+        head.next = node;
+        nbr.prev = node;
+    }
+
+    void removeNode(Node node) {
+        Node prevNbr = node.prev;
+
+        prevNbr.next = node.next;
+        node.next.prev = prevNbr;
+
+        node.next = node.prev = null;
+    }
+
+    void moveToFront(Node node) {
+        removeNode(node);
+        addNode(node);
+    }
+
+    public LRUCache(int capacity) {
+        this.cap = capacity;
+        this.cache = new HashMap<>();
+        this.head = new Node(-1,-1);
+        this.tail = new Node(-1,-1);
+        this.head.next = this.tail;
+        this.tail.prev = this.head;
+    }
+    
+    public int get(int key) {
+        if(cache.containsKey(key)) {
+            Node node = cache.get(key);
+            moveToFront(node);
+            return node.value;
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        if(cache.containsKey(key)) { 
+            Node node = cache.get(key);
+            node.value = value;
+            cache.put(key, node);
+            moveToFront(node);
+        }
+        else{
+            Node node = new Node(key, value);
+
+            if(cache.size() == this.cap) {
+                Node lruNode = tail.prev;
+                cache.remove(lruNode.key);
+                removeNode(lruNode);
+            }
+
+            cache.put(key, node);
+            addNode(node); 
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */

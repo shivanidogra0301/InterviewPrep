@@ -2,7 +2,7 @@
 
 //Function to find the minimum number of swaps required to sort the array.
 
-1. Make a ans upto which we want the current array to change but we will their original
+1. Make a ans upto which we want the current array to change but we will stored their original
 indices as well to know from which index that value came.
 2. so if we analyse the situation, say ki 4 th ki correct position 2 index hai, 
 to hm dekhenge 4 ko 2nd pe dalna hai, ab 4 jahan se htt rha vha kya dalenge

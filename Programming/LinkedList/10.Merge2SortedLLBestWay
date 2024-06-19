@@ -1,0 +1,47 @@
+1. Make a dummy Node
+2. point prev to next smalled element, and move forward
+
+complexity o )m+n
+public static Node merge2list(Node h1,Node h2) {
+    if(h1 == null || h2 == null) {
+        return (h1 != null) ? h1 : h2;
+    }
+    Node dummy = new Node(-1);
+    Node prev = dummy;
+
+    Node p1 = h1;
+    Node p2 = h2;
+
+    while(p1 != null && p2 != null) {
+        if(p1.val < p2.val) {
+            prev.next = p1;
+            p1 = p1.next;
+        }
+        else{
+            prev.next = p2;
+            p2 = p2.next;
+        }
+        prev = prev.next;
+    }
+
+    prev.next = p1 != null ? p1 : p2;
+    return dummy.next;
+}
+
+// merge k sorted lists, if we do it one by one ki 1 N size ki list ko merge kia fir usme
+dusri N size list add ki, then an size 2n hoga fir usme first n size ki list add ki
+meaning complexity = n(1+2+3---k)= n(k)(k+1)/2 = nk^2
+
+now make it better divide list in halg and the merge them
+public static Node mergeKList(Node[] lists, int si, int ei) {
+    if(si > ei) return null;
+    if(si == ei) {
+        return lists[si];
+    }
+    int mid = (si+ei)/2;
+    Node merged1 = mergeKList(lists, si, mid);
+    Node merged2 = mergeKList(lists, mid, ei);
+
+    return merge2list(merged1, merged2);
+}
+making time complexity = nlogk where k is size of list and N is total size of lis

@@ -1,0 +1,35 @@
+given array and window size, find maximum of every k size window
+
+1. Find next greater element on right.
+2. Then go one by one, for i check it's nge, if it's in the window, then go to its
+next greate, because we want to find maximum of window. Now if the next greater
+is ouside the window, meaning that value is the answer of that window.
+
+public static void slidingwindow (int[] arr, int k) {
+    int[] nge = new int[arr.length];
+    int[] ans = new int[arr.length-k];
+    Stack<Integer> st = new Stack<>();
+    st.push(arr.length-1);
+    for(int i = arr.length-2; i >= 0; i--) {
+        while(st.size() > 0 && arr[st.peek()] < arr[i]) {
+            st.pop();
+        }
+        if(st.size() == 0) {
+            nge[i]=arr.length;
+        }
+        else {
+            nge[i] = i;
+        }
+        st.push(i);
+    }
+
+    for(int i = 0; i < arr.length-k; i++){
+        int j = i;
+        // j will point to the greatest element who nge is outside the window
+        while(nge[j] < i+k ) {
+            j = nge[j];
+        }
+        ans[i] = arr[j];
+    }
+    return ans;
+}

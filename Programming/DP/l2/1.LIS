@@ -1,6 +1,6 @@
 https://leetcode.com/problems/longest-increasing-subsequence/
 
-if we can to actually print he lis and the seq mater in the answer then use N^2
+if we can to actually print the lis and the seq mater in the answer then use N^2
 approach, otherwise you can use nlogn approach but we cannot print the seq in thi approach
 
 Solution: at every dp[i] we are storing total no of lis which will ending in arr[i]
@@ -29,8 +29,8 @@ then take max of their length and append only in that ss to make lis.
 
 
 2. Approach so lis is longest inc ss, which means it will be sorted.
-so we can use binary search to found the lenght of it. So at every point we are checking
-if the last added number in seq <  current val, if yes we can just append our number
+so we can use binary search to found the length of it. So at every point we are checking
+if the last added number in seq < current val, if yes we can just append our number
 , to create one length longer lis.
 
 if last added num in sq > current val, so we surely cannot append it in last as

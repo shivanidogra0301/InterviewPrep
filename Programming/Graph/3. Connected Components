@@ -27,7 +27,7 @@ right se connected hai.
 Find total islands
 https://leetcode.com/problems/number-of-islands/description/
 1. vis[row][col] created.
-2. iterated over matrix, if 
+2. iterated over matrix, if here 0 means land
 if(arr[i][j] == 0 && vis[i][j] == false){
     dfs(i, j, vis, arr);
     cnt++;

@@ -1,0 +1,16 @@
+// when one pointer is moving twice the speed of first one, then we get the slow pointer
+in the mid position.
+
+public int mid() {
+    Node slow = head;
+    Node fast = head;
+
+    // fast.next = odd size
+    // fast.next.next = even size
+    while(fast.next!= null && fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    return slow.val;
+}

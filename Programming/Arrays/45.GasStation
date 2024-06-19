@@ -1,7 +1,9 @@
 https://leetcode.com/problems/gas-station/description/
 
-hr  point pe avaialble-cost krke a balance nikalo agar ye minimu to next ek answer ho skta hai
-, why we using prefix bacuse negative kisi bhi jagah ho that do no means uske aage or negative ni hoga.
+hr  point pe avaialble-cost krke a balance nikalo agar ye minimu to next
+ ek answer ho skta hai
+, why we using prefix bacuse negative kisi bhi jagah ho 
+that do no means uske aage or negative ni hoga.
 
 public int canCompleteCircuit(int[] gas, int[] cost) {
         int totalcost = 0;

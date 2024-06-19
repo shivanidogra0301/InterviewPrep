@@ -1,3 +1,5 @@
+https://www.geeksforgeeks.org/diagonal-traversal-of-binary-tree/
+
 hr evel pe right ko ans m add krenge but right m jane se phle left ko queue m dal denge
 
 public static ArrayList<ArrayList<Integer>> diagonalTraversal(Node root){

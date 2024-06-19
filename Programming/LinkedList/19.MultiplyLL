@@ -1,0 +1,65 @@
+1. reverse and multiply the liknklist with first digit
+
+public static Node multiply(Node head, int dig) {
+    Node dummy = new Node(-1);
+    Node cur = head;
+    int carry = 0;
+    Node ans = dummy;
+
+    while(cur != null || carry != 0) {
+        int curDig = (cur!= null) ? cur.val : 0;
+        int mul = curDig * dig + carry;
+
+        ans.next = new Node(mul%10);
+        carry = mul/10;
+
+        ans = ans.next;
+        cur = cur.next;
+    }
+
+    return dummy.next;
+}
+
+2. write function two add linkedlist with space
+
+public void add2LL(Node ans, Node curProd) {
+    int carry = 0;
+    Node ansItr = ans;
+    Node curItr = curProd; // result se hmesha bdi ya brabr 
+    while(curItr != null|| carry != 0) {
+        int sum = carry +
+         (curProd != null) ? curProd.val : 0
+         + (ansItr.next != null) ? ansItr.next.val : 0;
+         int dig = sum % 10;
+         carry = sum/10;
+
+         if(ansItr.next != null) ansItr.next.val= digit;
+         else ansItr.next = new node(dig);
+
+         if(curProd != null) curProd = curProd.next;
+         ansItr = ansItr.next;
+
+    }
+
+}
+
+2. In main function write the code two multiply the linkedlist with dig
+public Node multiplyTwoLinkedList(Node l1, Node l2) {
+    Node list1 = reverse(l1);
+    Node list2 = reverse(l2);
+    Node ans = new Node(-1);
+    Node ansItr = ans;
+
+    Node l2itr = list2;
+
+    while(l2itr != null) {
+        int l2dig = l2itr.val;
+        Node product = multiply(list1, l2dig);
+        add2LL(ansItr, product);
+
+        l2itr = l2itr.next;
+        ansItr = ansItr.next;
+
+    }
+    return reverse(ans.next);
+}
