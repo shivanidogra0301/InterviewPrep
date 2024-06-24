@@ -1,0 +1,68 @@
+https://leetcode.com/problems/maximal-rectangle/description/
+Given a rows x cols binary matrix filled with 0's and 1's,
+find the largest rectangle containing only 1's and return its area.
+
+Solution: if we analyse it row by row, you will find the question similar to largest
+aread histogram, in which we check next smaller on left and next smaller on right
+and calculate the width of rectangle
+
+1. Row by row calcualte larget area histogram and use omax for the final answer.
+2. Instead of using 2 stacks, we can use one to calculate nsl and nsr
+so when we checking for ith index, we found stack k top pe ek bdi value rkhi hai,
+usko hmne pop krdia, pr uss bdi value k liye nsr ith index hi hoga, to hm uske liye width
+nikal denge, nsl hm stack ki peek se le lenge , kyuki jb peek vala element ka calculation hora tha
+to usne stack se sb bde nikal diye honge fir khud ko push kia, to right now
+stack k peek pe nsl hi hoga, use hm answer calculate kr lenge.
+
+ 
+public int maximalRectangle(char[][] matrix) {
+        if(matrix.length == 0){
+            return 0;
+        }
+        int omax = Integer.MIN_VALUE;
+        int[] h = new int[matrix[0].length];
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[0].length; j++){
+                if(matrix[i][j] == '1'){
+                    h[j] += 1;
+                }
+                else{
+                    h[j] = 0;
+                }
+                
+            }
+            omax = Math.max(omax, largestRectangleArea(h));
+        }
+        return omax;
+    }
+    
+    public int largestRectangleArea(int[] arr) {
+        if(arr.length == 0){
+            return 0;
+        }
+        Stack<Integer> st = new Stack<>();
+        int omax = Integer.MIN_VALUE;
+        for(int i = 0; i < arr.length; i++){
+            while(st.size() > 0 && arr[i] < arr[st.peek()]){
+                int idx = st.pop();
+                int nsr = i;
+                int nsl = (st.size() > 0) ? st.peek():-1;
+                int height = arr[idx];
+                int width = nsr - nsl - 1;
+                omax = Math.max(omax, height*width);
+            }
+            
+            st.push(i);
+        }
+        
+        while(st.size() > 0){
+            int idx = st.pop();
+            int nsr = arr.length;
+            int nsl = (st.size() > 0) ? st.peek():-1;
+            
+            int height = arr[idx];
+            int width = nsr - nsl - 1;
+            omax = Math.max(omax, height*width);
+        }
+        return omax;
+    }

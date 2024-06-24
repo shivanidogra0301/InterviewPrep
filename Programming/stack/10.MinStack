@@ -1,0 +1,107 @@
+1 way, use 2 stacks one for all_data, min_data will push only when incoming value
+is less than min.stack.peek().
+
+void push(int val) {
+        // evrytime push
+        allData.push(val);
+        // only push if data is small or first time push
+        if (minData.size() == 0 || val <= minData.peek()) {
+            minData.push(val);
+        }
+    }
+
+    int pop() {
+        if (size() == 0) {
+            System.out.println("Stack underflow");
+            return -1;
+        } else {
+            // evrytime pop
+            int val = allData.pop();
+
+            // if vaue is same
+            if (val == minData.peek()) {
+                minData.pop();
+            }
+            return val;
+        }
+    }
+
+    int top() {
+        if (size() == 0) {
+            System.out.println("Stack underflow");
+            return -1;
+        } else {
+            //alldata return
+            return allData.peek();
+        }
+    }
+
+    int min() {
+        if (size() == 0) {
+            System.out.println("Stack underflow");
+            return -1;
+        } else {
+            // return minData top
+            return minData.peek();
+        }
+    }
+
+Second approach:
+use only min variable, now how can we go back to prev min after the cur min
+got popped from stack?. For that we will use some encryption while pushing it.
+
+during push, if curVal > min, push it directly no min updation required
+2. if it is smaller, then in stack will push curVal + curVal - min, and min = curVal here curVal is smaller,
+so the value stored in stack will be less than min, stating that now min needs to be updated
+during pop, 
+so during pop we need to return true value, which is stored in min.
+and to update min now, = 2*min (i.e curVal) - stack.peek() which is nothing but
+= 2 * curVal - curVal + curVal - min = min, here min is old min which we needed back.
+
+int size() {
+        // write your code here
+        return data.size();
+    }
+
+    void push(int val) {
+        // write your code here
+        if (data.size() == 0) {
+            data.push(val);
+            min = val;
+        } else if (data.size() != 0 && val < min) {
+            data.push(val + val - min);
+            min = val;
+        } else {
+            data.push(val);
+        }
+    }
+
+    int pop() {
+        // write your code here
+        int val = data.pop();
+        if (val < min) {
+            // minp = previous min
+            int minp = 2 * min - val;
+            int temp = min;
+            min = minp;
+            return temp;
+
+        } else {
+            return val;
+        }
+    }
+
+    int top() {
+        // write your code here
+        int val = data.peek();
+        if (val < min) {
+            return min;
+        } else {
+            return val;
+        }
+    }
+
+    int min() {
+        return min;
+        // write your code here
+    }

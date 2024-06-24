@@ -1,0 +1,42 @@
+https://leetcode.com/problems/score-of-parentheses/description/
+
+if () = 1
+()() = 1+1
+(()()) = 2 * (1+1)
+find score
+
+solution 1. if opening bracket comes push it, if closinf comes calculaye
+the score then push it.
+to push both integer and char, we will use -1 for opening bracket as notation.
+
+public int scoreOfParentheses(String s) {
+        Stack<Integer> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '('){
+                st.push(-1);
+            }
+            else {
+                // case ()
+                if(st.peek() == -1) {
+                    st.pop();
+                    st.push(1);
+                }
+                else{
+                    int curans = 0;
+                    //caculate the sum of inner brackets and then double it
+                    while(st.size() > 0 && st.peek() != -1) {
+                        curans += st.pop();
+                    }
+                    st.pop();
+                    st.push(2 * curans);
+                }
+            }
+        }
+        int ans = 0;
+        while(st.size() > 0){
+            ans += st.pop();
+        }
+        return ans;
+        
+    }

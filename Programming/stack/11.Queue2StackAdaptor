@@ -1,0 +1,140 @@
+1. Push efficient meaning 
+add should be in o(1), pop can take more than that
+Sol. use 2 queues, when 2 comes, put it directly in main queue making it o(1)
+
+Now for pop and top, queue will return wrong value i.e front of it
+for that remove every data from mainQ nd put it in helperQ except for last one,
+now in pop, remove last one, put eveyrthing back in main queuw
+Queue<Integer> mq = new ArrayDeque<>();  //main queue
+    Queue<Integer> hq = new ArrayDeque<>();  //helper queue
+
+
+    void push(int data){
+        mq.add(data);
+    }
+
+    int size(){
+        return mq.size();
+    }
+
+    int peek(){
+
+        if(this.size() == 0){
+            System.out.println("Stack underflow");
+            return -1;
+        }
+        else{
+            while(mq.size() > 1){
+                hq.add(mq.remove());
+            }
+
+                int top = mq.remove();
+                hq.add(top);
+
+                while(hq.size() > 0){
+                    mq.add(hq.remove());
+                }
+                return top;
+        }
+    }
+
+    int pop(){
+        if(this.size() == 0){
+            System.out.println("Stack underflow");
+            return -1;
+        }
+        else{
+            while(mq.size() > 1){
+                hq.add(mq.remove());
+            }
+
+                int top = mq.remove();
+                while(hq.size() > 0){
+                    mq.add(hq.remove());
+                }
+                return top;
+        }
+    }
+
+2. Pop efficient 
+meaning while pushing put it in correct way i.e when new dta comes first pop
+everything from main and put it in helper queue, then push the data in main, then
+put everything back in mainqueue
+Queue<Integer> mq = new ArrayDeque<>();  //main queue
+    Queue<Integer> hq = new ArrayDeque<>();  //helper queue
+
+    void push(int data){
+        while(mq.size() > 0){
+            hq.add(mq.remove());
+        }
+
+        mq.add(data);
+
+        while(hq.size() > 0){
+            mq.add(hq.remove());
+        }
+    }
+
+    int size(){
+        return mq.size();
+    }
+
+    int peek(){
+
+        if(this.size() == 0){
+            System.out.println("Stack underflow");
+            return -1;
+        }
+        else{
+            return mq.peek();
+        }
+    }
+
+    int pop(){
+        if(this.size() == 0){
+            System.out.println("Stack underflow");
+            return -1;
+        }
+        else{
+
+            return mq.remove();
+       
+        }
+    }
+
+// use only one queue
+whenever you pushes a new data, put it queue, then reverse the queue such that
+last element stays there
+meaing 10 20 30 now 40 comes = 10 20 30 40, then rotate it
+remove 10 add it in last = 20 30 40 10
+remove 20  = 30 40 10 20
+remove 30 = 40 10 20 30 making 40 the top, which is expected value
+meaing whenever new value comes it should be appended in first only and remove
+from first only making it stack
+
+Queue<Integer> queue;
+    public MyStack() {
+        queue = new ArrayDeque<>();
+    }
+    
+    public void push(int x) {
+        queue.add(x);
+        int size = queue.size();
+
+        // rotating it
+        while(size-- > 1) {
+            queue.add(queue.remove());
+        }
+    }
+    
+    public int pop() {
+        return queue.remove();
+    }
+    
+    public int top() {
+        return queue.peek();
+    }
+    
+    public boolean empty() {
+        return queue.size() == 0;
+    }

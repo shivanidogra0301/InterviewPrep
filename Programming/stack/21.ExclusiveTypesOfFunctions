@@ -1,0 +1,46 @@
+https://leetcode.com/problems/exclusive-time-of-functions/description/
+
+// given id, start, time, we have to find exclusive times meaning agar functionA
+ko execute hon1 10 min lgem and inside that functionb took 4 mins
+so total ans [6,4].
+
+meaning hme chidl function ka answer nikalke, fir parent ka calculate krna hai,
+start ko ( smjhke, direct push krdia, then for ) bracket, we will calculate the timing,
+and update parent childtime with total time took for functionB, so when we are calculating
+for parent we know child ne kitna time lia
+
+class Pair{
+        int id;
+        int ct; //childtime
+        int st; //starttime
+
+        Pair(int id, int ct, int st) {
+            this.id = id;
+            this.ct = ct;
+            this.st = st;
+        }
+    }
+    public int[] exclusiveTime(int n, List<String> logs) {
+        int[] ans = new int[n];
+        Stack<Pair> stack = new Stack<>();
+
+        for(String s: logs) {
+            String[] parts = s.split(":");
+            int id = Integer.parseInt(parts[0]);
+            String exp = parts[1];
+            int time = Integer.parseInt(parts[2]);
+
+            if(exp.equals("start")) {
+                stack.push(new Pair(id,0,time));
+            }
+            else{
+                Pair rp = stack.pop();
+                int interval = time - rp.st + 1;
+                ans[rp.id] += interval - rp.ct;
+                if(stack.size() > 0) {
+                    stack.peek().ct += interval;
+                } 
+            }
+        }
+        return ans;
+    }

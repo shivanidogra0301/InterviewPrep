@@ -1,0 +1,43 @@
+https://leetcode.com/problems/online-stock-span/
+
+Question: given dynamic price value we want to find stock span for them
+
+it is diffrent from stock span question becuase in that we have the whole array and
+we calculated the next greater on left in o(n). here array is dynakic, if we used the
+same approach it will be o(n^2).
+
+so instead of iterating whole array when prices somes, we want to skip some checkes
+solution: 100 30 70
+jab 70 aaya, he knows 30 uska ans ni bna skta so we will remove it from stack kyuki
+30 future m kisi ka bhi ans ni bn skta, as values > 70, know that 30 agar 70 se chhota
+to unka ans bhi ni bna paega and values < 70, usa ans 70 khud bn jaega. so we will remove it.
+
+
+class Pair{
+        int price;
+        int index;
+
+        Pair(int price, int index) {
+            this.price = price;
+            this.index = index;
+        }
+    }
+    Stack<Pair> st;
+    int index;
+    public StockSpanner() {
+        st = new Stack<>();
+        st.push(new Pair(Integer.MAX_VALUE, -1));
+        index = 0;
+    }
+    
+    public int next(int price) {
+        // if values is smaller remove it
+        while(st.peek().price <= price) {
+            st.pop();
+        }
+        // calculate ans
+        int ans = this.index - st.peek().index;
+        //push current value
+        st.push(new Pair(price, index++));
+        return ans;
+    }

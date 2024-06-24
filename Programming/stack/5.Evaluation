@@ -1,3 +1,5 @@
+1. Infix evaluation
+
 1. operand - direct push
 2. operator - check while top have high priority operator, use it and pop it.
                 then push latest
@@ -91,3 +93,47 @@ public static int precedence(char op) {
 		String s = "0-2147483648";
 		System.out.println(calculate(s));
 	}
+
+2. Prefix evaluation
+We don't need to care about precedence, so only one stack and use it for evalutions
+ie for every operator push 2 values from stack and solve it put it back
+keep in mind loop start from end.
+// first pop will ve v1 in case of prefix
+public static int PrefixEvaluation(String s) {
+        Stack<Integer> operands = new Stack<>();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                    int v1 = operands.pop();
+                    int v2 = operands.pop();
+                    int val = eval(v1, v2, c);
+                    operands.push(val);
+            } else if (c == ' ') {
+
+            } else {
+                int val = s.charAt(i) - '0';
+                operands.push(val);
+            }
+        }
+        return operands.peek();
+    }
+
+3. Postfix Evaluation
+public static int PostfixEvaluation(String s) {
+        Stack<Integer> operands = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                    int v2 = operands.pop();
+                    int v1 = operands.pop();
+                    int val = eval(v1, v2, c);
+                    operands.push(val);
+            } else if (c == ' ') {
+
+            } else {
+                int val = s.charAt(i) - '0';
+                operands.push(val);
+            }
+        }
+        return operands.peek();
+    }

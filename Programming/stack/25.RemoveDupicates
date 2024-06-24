@@ -1,0 +1,58 @@
+https://leetcode.com/problems/remove-duplicate-letters/description/
+Given a string s, remove duplicate letters so that every letter
+ appears once and only once. You must make sure your result is
+the smallest in lexicographical order
+among all possible results.
+
+Solution: given bac, we cannot make it smaller and anser will be bac only
+but what if bacb, now we have option to delete b, so if most significant value make
+b ki jgah a hoga to result small hi hoga, meaning agar a < st.peek() and st.peek() aage
+khi pe hai, to hm is 'b' ko surely hta k smaller answer bna skte hia.
+
+Example 1:
+
+Input: s = "bcabc"
+Output: "abc"
+
+Example 2:
+
+Input: s = "cbacdcbc"
+Output: "acdb"
+
+
+public String removeDuplicateLetters(String s) {
+        // last index to find ki aage duplicate hai ya nhi
+        int[] li = new int[26];
+        // ek bar answer m aagya, to dobara use use ni krna hai.
+        boolean[] isUsed = new boolean[26];
+
+        for(int i = 0; i < s.length(); i++) {
+            int idx = s.charAt(i) - 'a';
+            li[idx] = i;  
+        }
+
+        Stack<Character> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if(isUsed[ch - 'a']) continue;
+
+            while(st.size() > 0 && st.peek() >= ch && li[st.peek() - 'a'] >= i) {
+                char removed = st.pop();
+                isUsed[removed - 'a'] = false;   
+            }
+            st.push(ch);
+            isUsed[ch-'a'] = true;
+        }
+
+        int size = st.size();
+        char[] arr = new char[size];
+        int j = size-1;
+
+        while(st.size() > 0) {
+            arr[j--] =st.pop();
+        }
+
+        return new String(arr);
+    }

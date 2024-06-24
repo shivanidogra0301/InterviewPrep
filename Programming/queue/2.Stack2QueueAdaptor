@@ -1,0 +1,139 @@
+1. push efficient
+Maintain 2 stacks, push everything in main stack
+then during pop and top, pop everything from main and put it in helper
+except the last value, then put eveyrthing back to main
+Stack<Integer> ms = new Stack<>();  //main stack
+Stack<Integer> hs = new Stack<>();  //helper stack
+    
+    void add(int data){
+        ms.push(data);
+    }
+
+    int size(){
+        return ms.size();
+    }
+
+    int peek(){
+        if(this.size()== 0){
+            System.out.println("Queue underflow");
+            return -1;
+        }
+        else{
+            while(ms.size() > 1){
+                hs.push(ms.pop());
+            }
+
+            int val = ms.pop();
+            hs.push(val);
+
+            while(hs.size() > 0){
+                ms.push(hs.pop());
+            }
+
+            return val;
+
+        }
+
+    }
+
+    int remove(){
+        if(this.size()== 0){
+            System.out.println("Queue underflow");
+            return -1;
+        }
+        else{
+            while(ms.size() > 1){
+                hs.push(ms.pop());
+            }
+
+            int val = ms.pop();
+
+            while(hs.size() > 0){
+                ms.push(hs.pop());
+            }
+
+            return val;
+
+        }
+    }
+
+2. pop efficient
+while pushing, first put everythig from main to helper, push incoming value to main,
+then put everything back
+Stack<Integer> ms = new Stack<>();  //main stack
+    Stack<Integer> hs = new Stack<>();  //helper stack
+
+    void add(int data){
+        while(ms.size() > 0){
+            hs.add(ms.pop());
+        }
+
+        ms.push(data);
+
+        while(hs.size() > 0){
+            ms.push(hs.pop());
+        }
+    }
+
+    int size(){
+        return ms.size();
+    }
+
+    int peek(){
+        if(this.size()== 0){
+            System.out.println("Queue underflow");
+            return -1;
+        }
+        else{
+          return ms.peek();
+
+        }
+    }
+
+    int remove(){
+        if(this.size()== 0){
+            System.out.println("Queue underflow");
+            return -1;
+        }
+        else{
+          return ms.pop();
+        }
+    }
+
+3. o(1) for both push and pop
+so in push efficient we were putting evrything from main to helper
+then pop or peek then putting it back, then everytime we pop
+we do the same thing
+
+instead what we can do make 2 stack input and output, pop and peek
+alway be done from output, if output is empty put everything from input 
+to output making it does the thing only once.
+
+Stack<Integer> input;
+    Stack<Integer> output;
+    public MyQueue() {
+        input = new Stack<>();
+        output = new Stack<>();
+    }
+    
+    public void push(int x) {
+        input.push(x);
+    }
+    
+    public int pop() {
+        peek();
+        return output.pop();
+    }
+    
+    public int peek() {
+        if(output.size() == 0) {
+            while(input.size() != 0) {
+                output.push(input.pop());
+            }
+        }
+        return output.peek();
+    }
+    
+    public boolean empty() {
+        return output.size() == 0 && input.size() == 0;
+    }

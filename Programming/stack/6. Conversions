@@ -1,0 +1,131 @@
+1. Infix to postfix
+1. maintain 2 stack one for operand one for optor,
+2. if number or abc come, push to oprand stack
+3. (  push to oprator
+4. ) pop from operator, pop 2 values from operand and push the String
+  * v1 v2 in oprand stack, meaing  v1 v2 operator
+5. if operator comes, remove high priority opertor from top and do same
+mention in 4th step.
+
+1. main logic is while pushing in operand we are appending it to the back of string
+while (operators.size() > 0 && operators.peek() != '('
+                        && precedence(c) <= precedence(operators.peek())) {
+                    char op = operators.pop();
+                    String v2 = operands.pop();
+                    String v1 = operands.pop();
+                    // only step which is diffrent
+                    String val =  v1 + v2 + op;
+                    operands.push(val);
+                }
+
+2. Infix to prefix
+same to above, 
+// only step which is different
+String val =  op + v1 + v2;
+
+3. Postfix to infix
+/*
+precedence is already handled in postfix so we dont need 2 stacks
+postfix v1 v2 op => v1 op v2
+String s = "231*+341*+-";
+there wont be case operands are not there and we have operator
+*/
+ public static String convertToInfix(String s) {
+        Stack<String> operands = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                    String op = c + "";
+                    String v2 = operands.pop();
+                    String v1 = operands.pop();
+                    String val = "(" + v1 + op + v2 + ")";
+                    operands.push(val);
+            } else if (c == ' ') {
+
+            } else {
+                int val = s.charAt(i) - '0';
+                operands.push(val + "");
+            }
+        }
+        return operands.peek();
+    }
+
+
+4. Postifx to prefix
+//precedence is already handled in postfix so we dont need 2 stacks
+//postfix v1 v2 op => op v1 v2
+
+ public static String convertToPrefix(String s) {
+        Stack<String> operands = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                    String op = c + "";
+                    String v2 = operands.pop();
+                    String v1 = operands.pop();
+                    String val = op + v1 + v2;
+                    operands.push(val);
+            } else if (c == ' ') {
+
+            } else {
+                int val = s.charAt(i) - '0';
+                operands.push(val + "");
+            }
+        }
+        return operands.peek();
+    }
+
+5. Prefix to infix, 
+// operators are accumulated in starting, so we start from end of the loop
+// first pop will ve v1 in case of prefix
+public static String convertToInfix(String s) {
+        Stack<String> operands = new Stack<>();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                    String op = c + "";
+                    String v1 = operands.pop();
+                    String v2 = operands.pop();
+                    String val = "(" + v1 + op + v2 + ")";
+                    operands.push(val);
+            } else if (c == ' ') {
+
+            } else {
+                int val = s.charAt(i) - '0';
+                operands.push(val + "");
+            }
+        }
+        return operands.peek();
+    }
+    public static void main(String[] args) {
+        String s = "-+2*31+3*41";
+        String ans = convertToInfix(s);
+        System.out.println(ans);
+    }
+
+6. Prefix to postfix
+// first pop will ve v1 in case of prefix
+public static String convertToPostfix(String s) {
+        Stack<String> operands = new Stack<>();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                    String op = c + "";
+                    String v1 = operands.pop();
+                    String v2 = operands.pop();
+                    String val = v1 + v2 + op;
+                    operands.push(val);
+            } else if (c == ' ') {
+
+            } else {
+                int val = s.charAt(i) - '0';
+                operands.push(val + "");
+            }
+        }
+        return operands.peek();
+    }
+    public static void main(String[] args) {
+        String s = "-+2*31+3*41";
+        String ans = convertToPostfix(s);
+        System.out.println(ans);
+    }

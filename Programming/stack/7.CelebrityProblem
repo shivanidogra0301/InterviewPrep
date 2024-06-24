@@ -1,0 +1,49 @@
+// given 2 d matrix, we know that m[i][j] = 1 meaning i knows j,
+0 meaning i do not know j. We have to find the 
+celebrity, jisko sab jante ho or usko koi na janta ho in o(n).
+
+Note: there cannot be the case there exists more than one celebrity.
+
+now to find the one celebrity, we will put all the people in stach and check
+if i knows j, meaning i cannot be the celebrity
+if i do not know j, meanif j definitely cannot be celebrity
+
+After completing, one person is left. Check if he is the one or not
+int celebrity(int M[][], int n)
+    {
+    	Stack<Integer> st = new Stack<>();
+    	
+    	for(int i = 0; i < n; i++) {
+    	    st.push(i);
+    	}
+    	
+    	while(st.size() >= 2) {
+    	    int p1 = st.pop();
+    	    int p2 = st.pop();
+    	    
+    	    if(M[p1][p2] == 1) {
+    	        st.push(p2);
+    	    }
+    	    else {
+    	        st.push(p1);
+    	    }
+    	}
+    	
+    	int pans = st.pop();
+    	boolean isCelebrity = true;
+    	
+    	for(int i = 0; i < n; i++) {
+    	    if( i != pans) {
+    	        if(M[pans][i] == 1 || M[i][pans] == 0) {
+    	            isCelebrity = false;
+    	            break;
+    	        }
+    	    }
+    	    
+    	}
+    	
+    	if(isCelebrity) {
+    	    return pans;
+    	}
+    	return -1;
+    }

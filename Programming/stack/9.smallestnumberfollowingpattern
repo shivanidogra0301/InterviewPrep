@@ -1,0 +1,29 @@
+dd = 321
+di = 213
+ii =123
+simple, when d comes we want to push in reverse order. so put the values in stack
+when i comes we got the anser before it, to print it and pop it, and start again
+
+
+Stack<Integer> s = new Stack<>();
+
+		int num = 1;
+		for(int i = 0; i < str.length(); i++){
+			char c = str.charAt(i);
+			if(c == 'd'){
+				s.push(num);
+				num++;
+			}
+			else{
+				s.push(num);
+				num++;
+				while(s.size() > 0){
+					System.out.print(s.pop());
+				}
+			}
+		}
+		s.push(num);
+		while(s.size() >  0){
+			System.out.print(s.pop());
+		}
+	}

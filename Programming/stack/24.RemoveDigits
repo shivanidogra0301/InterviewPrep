@@ -1,0 +1,46 @@
+https://leetcode.com/problems/remove-k-digits/description/
+
+Given string num representing a non-negative integer num, 
+and an integer k, return the smallest possible integer 
+after removing k digits from num.
+
+1423 , k =1, then we can remove 1 ,4 2 ,3
+and resulting will surely be 3 digit number, but if we removed1, then 4 will be in its place
+which is wrong choice, 4--, 1--, 14-, 14-, in all 4 case worst choice is to put 4 in front
+. so if significant place have smaller value then next place value,
+we should not remove it, but remove that greater value because it will make 
+number larger.
+
+public String removeKdigits(String num, int k) {
+        Stack<Integer> st = new Stack<>();
+
+
+        for(int i = 0; i < num.length(); i++) {
+            int dig = num.charAt(i) - '0';
+
+            while(st.size() > 0 && st.peek() > dig && k>0) {
+                st.pop();
+                k--;
+            }
+            st.push(dig);
+        }
+
+        
+        while(st.size() > 0 && k > 0) {
+            st.pop();
+            k--;
+        }
+        StringBuilder ans = new StringBuilder();
+
+        while(st.size() > 0) {
+            ans.append(st.pop());
+        }
+
+        ans = ans.reverse();
+
+        while(ans.length() > 0 && ans.charAt(0) == '0') {
+            ans.deleteCharAt(0);
+        }
+
+        return ans.length() > 0 ? ans.toString() : "0";
+    }

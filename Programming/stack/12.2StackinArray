@@ -1,0 +1,8 @@
+in array make 2 stacks, such that push1 will put it in s1
+push2 in s2, and when array is filled, both will return overflow
+
+simple use 2 pointers, tos1 = -1, tos2 = data.length
+if push1 = tos1++, data[tos1] = val;
+push2 = tos2--, data[tos2] = val
+if(tos1 + 1 == tos2) overflow
+

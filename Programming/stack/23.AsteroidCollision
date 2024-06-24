@@ -1,0 +1,60 @@
+
+We are given an array asteroids of integers representing asteroids in a row.
+
+For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). 
+Each asteroid moves at the same speed.
+
+Find out the state of the asteroids after all collisions. 
+If two asteroids meet, the smaller one will explode.
+If both are the same size, both will explode.
+Two asteroids moving in the same direction will never meet.
+
+https://leetcode.com/problems/asteroid-collision/description/
+
+Solution: check all the cases 
+if positive push
+if negative
+    1.check if first element, then push or agar stack m negative hai meaning never collid then also push
+    2. if not first and stack k top pe positive hai
+        peek > curval, to curval ko htana hai i++
+        peek == curval to pop, and i++ remove both
+        peak < curval, to pop to hoga, but abhi curval ko next peek se dekhna hoga so no i++
+public int[] asteroidCollision(int[] ast) {
+        Stack<Integer> st = new Stack<>();
+        int i = 0;
+        while(i < ast.length){
+            
+            if(ast[i] > 0){
+                st.push(ast[i]);
+                i++;
+            }
+            else{
+                if( st.size() == 0 || st.peek() < 0 ){
+                    st.push(ast[i]);
+                    i++;
+                }
+                else{
+                   if(st.peek() > Math.abs(ast[i])){
+                       i++;
+                   }
+                    else if(st.peek() < Math.abs(ast[i])){
+                        st.pop();
+                       
+                    }
+                    else{
+                        st.pop();
+                        i++;
+                    }
+                }
+                
+            }
+        }
+        
+        int[] ans = new int[st.size()];
+        i = st.size()-1;
+        while(i >= 0){
+            ans[i] = st.pop();
+            i--;
+        }
+        return ans;
+    }

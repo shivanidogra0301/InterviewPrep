@@ -1,0 +1,44 @@
+https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/description/
+
+Given a string s of '(' , ')' and lowercase English characters.
+Your task is to remove the minimum number of parentheses ( '(' or ')', in any positions )
+so that 
+the resulting parentheses string is valid and return any valid string.
+
+Solution: ) agar invalid hai usko hm easily bta skte if not enought opening brackets
+simple string m vha . lga ki hme ise htana hai, and when processing is done
+only those will be left who do n't have corresponding closing bracket, remove that
+as well
+public String minRemoveToMakeValid(String s) {
+        char[] chars = s.toCharArray();
+        Stack<Integer> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++) {
+            char ch = chars[i];
+            if(ch == '(') {
+                st.push(i);
+            }
+            else if(ch == ')') {
+                if(st.size() == 0) {
+                    chars[i] = '.';
+                }
+                else{
+                    st.pop();
+                }
+            }
+        }
+
+        StringBuilder ans = new StringBuilder();
+
+        while(st.size() > 0) {
+            chars[st.pop()] = '.';
+        }
+
+        for(int i = 0; i < s.length(); i++) {
+            if(chars[i] != '.') {
+                ans.append(chars[i]);
+            }
+        }
+
+        return ans.toString();
+    }

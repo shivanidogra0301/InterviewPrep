@@ -1,0 +1,112 @@
+Given a string s representing a valid expression, implement a basic calculator to evaluate it,
+and return the result of the evaluation.
+
+Problem: only +- is given, but for -(8+9) it should be negative, to do that we have to
+take care of the signs as well
+
+solution, take sum and sign variable everytime a dig come add it in sum using
+the sign value, if -ve comes make sign value negative, opening bracket comes,
+push the prev sum and the sign outside of bracket, if closing comes make the current
+sum appropriavte using latest sign and add prev sign.
+
+public int calculate(String s) {
+        int sum = 0;
+        int sign = 1;
+
+        Stack<Integer> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if(Character.isDigit(ch)) {
+                int dig = 0;
+                while(i < s.length() && Character.isDigit(s.charAt(i))) {
+                    dig = 10 * dig + (s.charAt(i) - '0');
+                    i++;
+                }
+                i--;
+                dig = dig * sign;
+                sign = 1;
+                sum += dig;
+            }
+            else if(ch == '(') {
+                st.push(sum);
+                st.push(sign);
+                sum = 0;
+                sign = 1;
+            }
+            else if(ch == ')') {
+                sum = sum * st.pop();
+                sum += st.pop();
+            }
+            else if(ch == '-') {
+                sign *= -1;
+            }
+        }
+        return sum;
+    } 
+
+// basic infix evaluation
+public int calculate(String s) {
+        Stack<Character> optor = new Stack<>();
+        Stack<Integer> oprnd = new Stack<>();
+        int i = 0;
+
+        while(i < s.length()) {
+            char ch = s.charAt(i);
+            if(ch == ' '){
+                i++;
+                continue;
+            }
+            else if(Character.isDigit(ch)) {
+                String dig = "";
+                while(i < s.length() && Character.isDigit(s.charAt(i))) {
+                    ch = s.charAt(i);
+                    dig += ch;
+                    i++;
+                }
+                oprnd.push(Integer.parseInt(dig));
+            }
+            else{
+                while(optor.size() > 0 && getPriority(optor.peek()) >= getPriority(ch)) {
+                    int d2 = oprnd.pop();
+                    int d1 = oprnd.pop();
+                    char exp = optor.pop();
+                    oprnd.push(evaluate(d1, d2, exp));
+                }
+                optor.push(ch);
+                i++;
+            }
+        }
+
+        while(optor.size() > 0) {
+            int d2 = oprnd.pop();
+            int d1 = oprnd.pop();
+            char exp = optor.pop();
+            oprnd.push((evaluate(d1, d2, exp)));
+        }
+        return oprnd.peek();
+
+    }
+
+    public int getPriority(char ch) {
+        if(ch == '*' || ch == '/') {
+            return 2;
+        }
+        return 1;
+    }
+
+    public int evaluate(int d1, int d2, char exp) {
+        if(exp == '+') {
+            return (d1 + d2);
+        }
+        else if(exp == '-') {
+            return (d1 - d2);
+        }
+        else if(exp == '*') {
+            return (d1 * d2);
+        }
+        else{
+            return (d1/d2);
+        }
+}

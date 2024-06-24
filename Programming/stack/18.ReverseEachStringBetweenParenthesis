@@ -1,0 +1,69 @@
+https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/
+
+similar to previous question, (ab) = ba
+a(ab) = aba
+(a(ab)) = aba 
+i.e phle innermost bracket ko solve kia, then outermost ko solve kia
+
+simple hai stack m ans dalte jana hai jaise bracket solve ho,
+
+
+public String reverseParentheses(String s) {
+        Stack<StringBuilder> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+            StringBuilder sb = new StringBuilder();
+            if(ch == '(' || (ch >= 'a' && ch <= 'z')) {
+                sb.append(ch);
+                st.push(sb);
+            }
+            else{
+                while(st.size() > 0 && !st.peek().toString().equals("(")) {
+                    sb.append(st.pop().reverse());
+                }
+                st.pop();
+                st.push(sb);
+            }
+        }
+
+        StringBuilder ans = new StringBuilder();
+
+        while(st.size() > 0 ){
+            ans.insert(0, st.pop());
+        }
+        return ans.toString();
+    }
+
+
+
+other way using queue
+public String reverseParentheses(String s) {
+        Stack<Character> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+
+            if(ch == ')') {
+                Queue<Character> q = new LinkedList<>();
+
+                while(st.size() > 0 && st.peek() != '(') {
+                    q.add(st.pop());
+                }
+                st.pop();
+                while(q.size() > 0) {
+                    st.push(q.remove());
+                }
+            }
+            else{
+                st.push(ch);
+            }
+        }
+
+        StringBuilder ans = new StringBuilder();
+
+        while(st.size() > 0 ){
+            ans.insert(0, st.pop());
+        }
+        return ans.toString();
+    }
